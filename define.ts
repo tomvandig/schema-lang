@@ -116,7 +116,6 @@ function AnalyzeTopExport(name: string, exported: any)
         classes: [] as any
     };
 
-    let count = 0;
     exported.forEach((export1) => {
         if (Array.isArray(export1))
         {
@@ -129,7 +128,7 @@ function AnalyzeTopExport(name: string, exported: any)
         else
         {
             // direct class def
-            let cs = AnalyzeClass(`${name}::${count++}`, export1);
+            let cs = AnalyzeClass(`${name}`, export1);
             cs.hash = HashClass(cs);
             schemaDef.classes.push(cs);
         }
@@ -147,13 +146,16 @@ function HashClass(c)
 function AnalyzeSchema(filename: string, rawSchema: any)
 {
     let outputSchema: any = {};
-    outputSchema.originalFileName = filename; 
+    outputSchema.originalFileName = filename;
+    outputSchema.roots = []; 
 
-    let exports = rawSchema[0];
-    Object.keys(exports).forEach((key) => {
-        let c = AnalyzeTopExport(key, exports[key]);
-        outputSchema.root = c;
+    rawSchema.forEach((exports) => {
+        Object.keys(exports).forEach((key) => {
+            let c = AnalyzeTopExport(key, exports[key]);
+            outputSchema.roots.push(c);
+        })
     })
+    
 
     return outputSchema;
 }

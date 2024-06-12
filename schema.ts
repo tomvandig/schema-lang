@@ -1,9 +1,9 @@
 import colors from "./colors";
-import profile from "./otherschema";
+import { profile, profile2 } from "./otherschema";
 import { f32, $, str } from "./primitives";
 
-export default {
-    "ifc::geometry::extrude": [
+export const extrude = {
+    "ifc::geometry::extrude::0": [
         [profile],
         {
             x: f32,
@@ -14,9 +14,15 @@ export default {
             indices: profile,
             other: [$(profile)],
             other2: [profile],
-        },
+        }
+    ]
+}
+
+export const extrude_v2 = {
+    "ifc::geometry::extrude::1": [
+        [extrude],
         {
-            newVersion: str
+            extended: profile2
         }
     ]
 }

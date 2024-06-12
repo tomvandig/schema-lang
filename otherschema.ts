@@ -1,7 +1,16 @@
-import { str } from "./primitives";
+import { f32, str } from "./primitives";
 
-export default {
-    "ifc::profile": [{
+export const profile = {
+    "ifc::profile::0": [{
         contents: str
     }]
+}
+
+export const profile2 = {
+    "ifc::profile::1": [
+        [profile],
+        {
+            color: f32
+        }
+    ]
 }
