@@ -1,7 +1,7 @@
 import { str } from "./primitives";
 
 export default {
-    list: {
+    "ifc::profile": [{
         contents: str
-    }
+    }]
 }

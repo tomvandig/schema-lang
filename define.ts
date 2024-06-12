@@ -34,10 +34,20 @@ function AnalyzeValue(rawValue: any)
     } 
     if (Array.isArray(rawValue))
     {
-        let arrayType = AnalyzeValue(rawValue[0]);
-        return {
-            type: "array",
-            arrayType
+        if (typeof rawValue[0] === "string")
+        {
+            return {
+                type: "enum",
+                options: rawValue
+            }
+        }
+        else
+        {
+            let arrayType = AnalyzeValue(rawValue[0]);
+            return {
+                type: "array",
+                arrayType
+            }
         }
     }
     if (typeof rawValue === "object")
@@ -48,7 +58,7 @@ function AnalyzeValue(rawValue: any)
 
             return {
                 type: "reference",
-                referencedType: referencedClasses["classes"][0]
+                referencedClasses: referencedClasses["classes"][0].classes
             }
         }
         else
@@ -57,7 +67,7 @@ function AnalyzeValue(rawValue: any)
 
             return {
                 type: "relationship",
-                referencedType: referencedClasses["classes"][0]
+                relatedClasses: referencedClasses["classes"][0].classes
             }
         }
     }
@@ -65,7 +75,7 @@ function AnalyzeValue(rawValue: any)
     return null;
 }
 
-function AnalyzeClass(name:string, rawClassDef: any)
+function AnalyzeClass(name: string, rawClassDef: any)
 {
     let classDef = {
         name,
@@ -91,9 +101,38 @@ function AnalyzeExport(exported: any)
     };
 
     Object.keys(exported).forEach((exportedName) => {
-        let analyzedClass = AnalyzeClass(exportedName, exported[exportedName]);
-        analyzedClass.hash = HashClass(AnalyzeClass(exportedName, exported[exportedName]));
+        let analyzedClass = AnalyzeTopExport(exportedName, exported[exportedName]);
         schemaDef.classes.push(analyzedClass);
+    });
+
+    return schemaDef;
+}
+
+function AnalyzeTopExport(name: string, exported: any)
+{
+    let schemaDef = {
+        name,
+        // inherits: [] as any,
+        classes: [] as any
+    };
+
+    let count = 0;
+    exported.forEach((export1) => {
+        if (Array.isArray(export1))
+        {
+            // list of inherits
+            export1.forEach((export2) => {
+                let analyzedClass = AnalyzeExport(export2);
+                schemaDef.classes.push(...analyzedClass["classes"][0].classes);
+            })
+        }
+        else
+        {
+            // direct class def
+            let cs = AnalyzeClass(`${name}::${count++}`, export1);
+            cs.hash = HashClass(cs);
+            schemaDef.classes.push(cs);
+        }
     });
 
     return schemaDef;
@@ -110,9 +149,11 @@ function AnalyzeSchema(filename: string, rawSchema: any)
     let outputSchema: any = {};
     outputSchema.originalFileName = filename; 
 
-    let c = AnalyzeExport(rawSchema[0]);
-    c.hash = HashClass(c);
-    outputSchema.root = c;
+    let exports = rawSchema[0];
+    Object.keys(exports).forEach((key) => {
+        let c = AnalyzeTopExport(key, exports[key]);
+        outputSchema.root = c;
+    })
 
     return outputSchema;
 }
