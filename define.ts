@@ -57,8 +57,8 @@ function AnalyzeValue(rawValue: any)
             let referencedClasses = AnalyzeExport(rawValue);
 
             return {
-                type: "reference",
-                referencedClasses: referencedClasses["classes"][0].classes
+                type: "composition",
+                ofClasses: referencedClasses["classes"][0].classes
             }
         }
         else
@@ -67,7 +67,7 @@ function AnalyzeValue(rawValue: any)
 
             return {
                 type: "relationship",
-                relatedClasses: referencedClasses["classes"][0].classes
+                withClasses: referencedClasses["classes"][0].classes
             }
         }
     }
