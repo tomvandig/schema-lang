@@ -37,7 +37,7 @@ export interface SchemaClass
 {
     name: string;
     hash: string;
-    values: SchemaClassValue[]; 
+    values: SchemaClassNamedValue[]; 
 }
 
 export interface Schema {
