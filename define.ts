@@ -58,7 +58,7 @@ function AnalyzeValue(rawValue: any)
 
             return {
                 type: "composition",
-                ofClasses: referencedClasses["classes"][0].classes
+                ofClasses: referencedClasses["classes"][0]
             }
         }
         else
@@ -67,7 +67,7 @@ function AnalyzeValue(rawValue: any)
 
             return {
                 type: "relationship",
-                withClasses: referencedClasses["classes"][0].classes
+                withClasses: referencedClasses["classes"][0]
             }
         }
     }

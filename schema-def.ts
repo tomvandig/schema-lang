@@ -8,20 +8,26 @@ export interface SchemaEnumValue
 export interface SchemaCompositionValue
 {
     type: "composition";
-    ofClasses: SchemaClass[];
+    ofClasses: {
+        name: string,
+        classes: SchemaClass[]
+    };
 }
 
 export interface SchemaArrayValue
 {
     type: "array";
-    arrayType: SchemaClassValue[];
+    arrayType: SchemaClassValue;
 }
 
 
 export interface SchemaRelationshipValue
 {
     type: "relationship";
-    withClasses: SchemaClass[];
+    withClasses: {
+        name: string,
+        classes: SchemaClass[]
+    };
 }
 
 export type SchemaClassValue =

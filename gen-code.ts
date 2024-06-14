@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { Schema, SchemaClass, SchemaFile } from "./schema-def";
+import { Schema, SchemaClass, SchemaClassValue, SchemaFile } from "./schema-def";
 
 function Indent(str: string, indent: number)
 {
@@ -102,11 +102,38 @@ class TSCodeGen
         return str.replace(/::/g, "_");
     }
 
+    GenTypeForValue(value: SchemaClassValue)
+    {
+        if (typeof value === "string")
+        {
+            if (value === "f32") return "number";
+            if (value === "string") return "string";
+            return "<unknown primitive>";
+        }
+        if (value.type === "enum")
+        {
+            return `${value.options.map(option => `"${option}"`).join("|")}`;
+        }
+        if (value.type === "composition")
+        {
+            return `${this.CleanupSchemaName(value.ofClasses.name)}`;
+        }
+        if (value.type === "relationship")
+        {
+            return `Rel<${this.CleanupSchemaName(value.withClasses.name)}>`;
+        }
+        if (value.type === "array")
+        {
+            return `${this.GenTypeForValue(value.arrayType)}[]`;
+        }
+        return "<unknown>";
+    }
+
     GenDefCodeForClass(schema: SchemaClass)
     {
         this.code.EmitCode(`// ${schema.name}`);
         schema.values.forEach((value) => {
-            this.code.EmitCode(`${value.name}: string;`);
+            this.code.EmitCode(`${value.name}: ${this.GenTypeForValue(value.type)};`);
         })
     }
     GenExportCodeForClass(schema: SchemaClass)
@@ -137,13 +164,11 @@ class TSCodeGen
             this.GenDefCodeForClass(schemaClass);
         })
 
-        this.code.EmitCode(`Export()`, false)
+        this.code.EmitCode(`Export(__export: any)`, false)
         this.code.StartBlock();
-        this.code.EmitCode(`let __export = {} as any;`)
         schema.classes.forEach((schemaClass) => {
             this.GenExportCodeForClass(schemaClass);
         })
-        this.code.EmitCode(`return __export;`)
         this.code.EndBlock();
 
         
