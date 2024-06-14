@@ -102,11 +102,27 @@ class TSCodeGen
         return str.replace(/::/g, "_");
     }
 
-    GenCodeForClass(schema: SchemaClass)
+    GenDefCodeForClass(schema: SchemaClass)
     {
-        this.code.EmitCode(`static hash = "${schema.hash}";`);
+        this.code.EmitCode(`// ${schema.name}`);
         schema.values.forEach((value) => {
             this.code.EmitCode(`${value.name}: string;`);
+        })
+    }
+    GenExportCodeForClass(schema: SchemaClass)
+    {
+        this.code.EmitCode(`// ${schema.name}`);
+        this.code.EmitCode(`// ${schema.hash}`);
+        schema.values.forEach((value) => {
+            this.code.EmitCode(`__export.${value.name} = this.${value.name};`);
+        })
+    }
+    GenImportCodeForClass(schema: SchemaClass)
+    {
+        this.code.EmitCode(`// ${schema.name}`);
+        this.code.EmitCode(`// ${schema.hash}`);
+        schema.values.forEach((value) => {
+            this.code.EmitCode(`instance.${value.name} = __import.${value.name};`);
         })
     }
 
@@ -114,16 +130,31 @@ class TSCodeGen
     {
         this.code.EmitCode(`// generated code for ${schema.name}`);
 
-        this.code.EmitCode(`namespace ${this.CleanupSchemaName(schema.name)}`)
+        this.code.EmitCode(`class ${this.CleanupSchemaName(schema.name)}`)
         this.code.StartBlock();
 
         schema.classes.forEach((schemaClass) => {
-            this.code.EmitCode(`class ${this.CleanupSchemaName(schemaClass.name)} `, false);
-            this.code.StartBlock();
-            this.GenCodeForClass(schemaClass);
-            this.code.EndBlock();
-            this.code.NewLine();
+            this.GenDefCodeForClass(schemaClass);
         })
+
+        this.code.EmitCode(`Export()`, false)
+        this.code.StartBlock();
+        this.code.EmitCode(`let __export = {} as any;`)
+        schema.classes.forEach((schemaClass) => {
+            this.GenExportCodeForClass(schemaClass);
+        })
+        this.code.EmitCode(`return __export;`)
+        this.code.EndBlock();
+
+        
+        this.code.EmitCode(`static Import(__import)`, false)
+        this.code.StartBlock();
+        this.code.EmitCode(`let instance = new ${this.CleanupSchemaName(schema.name)}()`)
+        schema.classes.forEach((schemaClass) => {
+            this.GenImportCodeForClass(schemaClass);
+        })
+        this.code.EmitCode(`return instance;`)
+        this.code.EndBlock();
 
         this.code.EndBlock();
     }
