@@ -1,6 +1,6 @@
-import colors from "./input/shared/colors";
+import colors from "./shared/colors";
+import { f32, $, str } from "./shared/primitives";
 import { profile, profile2 } from "./otherschema";
-import { f32, $, str } from "./input/shared/primitives";
 
 export const extrude = {
     "ifc::geometry::extrude::0": [

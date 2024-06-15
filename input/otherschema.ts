@@ -1,4 +1,4 @@
-import { f32, str } from "./input/shared/primitives";
+import { f32, str } from "./shared/primitives";
 
 export const profile = {
     "ifc::profile::0": [{

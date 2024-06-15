@@ -93,13 +93,19 @@ class CodeFormat
     }
 }
 
+function CleanupSchemaName(str: string)
+{
+    return str.replace(/::/g, "_");
+}
+
 class TSCodeGen
 {
     code: CodeFormat;
+    mainInclude: string;
 
-    CleanupSchemaName(str: string)
+    constructor(mainInclude: string)
     {
-        return str.replace(/::/g, "_");
+        this.mainInclude = mainInclude;
     }
 
     GenTypeForValue(value: SchemaClassValue)
@@ -116,11 +122,11 @@ class TSCodeGen
         }
         if (value.type === "composition")
         {
-            return `${this.CleanupSchemaName(value.ofClasses.name)}`;
+            return `${CleanupSchemaName(value.ofClasses.name)}`;
         }
         if (value.type === "relationship")
         {
-            return `Rel<${this.CleanupSchemaName(value.withClasses.name)}>`;
+            return `Rel<${CleanupSchemaName(value.withClasses.name)}>`;
         }
         if (value.type === "array")
         {
@@ -157,14 +163,14 @@ class TSCodeGen
     {
         this.code.EmitCode(`// generated code for ${schema.name}`);
 
-        this.code.EmitCode(`class ${this.CleanupSchemaName(schema.name)}`)
+        this.code.EmitCode(`class ${CleanupSchemaName(schema.name)}`)
         this.code.StartBlock();
 
         schema.classes.forEach((schemaClass) => {
             this.GenDefCodeForClass(schemaClass);
         })
 
-        this.code.EmitCode(`Export(__export: any)`, false)
+        this.code.EmitCode(`ToJSON(__export: any)`, false)
         this.code.StartBlock();
         schema.classes.forEach((schemaClass) => {
             this.GenExportCodeForClass(schemaClass);
@@ -172,9 +178,9 @@ class TSCodeGen
         this.code.EndBlock();
 
         
-        this.code.EmitCode(`static Import(__import)`, false)
+        this.code.EmitCode(`static FromJSON(__import)`, false)
         this.code.StartBlock();
-        this.code.EmitCode(`let instance = new ${this.CleanupSchemaName(schema.name)}()`)
+        this.code.EmitCode(`let instance = new ${CleanupSchemaName(schema.name)}()`)
         schema.classes.forEach((schemaClass) => {
             this.GenImportCodeForClass(schemaClass);
         })
@@ -189,6 +195,8 @@ class TSCodeGen
         this.code = new CodeFormat();
 
         this.code.EmitCode(`// generated code for ${schemaFile.originalFileName}`);
+        this.code.EmitCode(`import { Rel } from "${this.mainInclude}"`);
+        this.code.NewLine();
 
         schemaFile.roots.forEach((root) => {
             this.GenCodeForSchema(root);
@@ -198,16 +206,52 @@ class TSCodeGen
     }
 }
 
-function GenCodeForSchemaFile(file)
+function GenCodeForSchemaFile(schema: SchemaFile, classToFileMap: {})
 {
-    const json = JSON.parse(fs.readFileSync(file).toString());
+    let outputFileName = schema.originalFileName.replace(/.json/g, ".ts").replace("input", "output");
 
-    // TODO: validate
-    const schema = json as SchemaFile;
+    let mainInclude = "../sm_primitives.ts";
 
-    let codeGen = new TSCodeGen();
+    let codeGen = new TSCodeGen(mainInclude);
     let code = codeGen.GenCodeForSchemaFile(schema);
-    fs.writeFileSync("output.ts", code);
+    fs.writeFileSync(require("path").join(outputFileName), code);
 }
 
-GenCodeForSchemaFile("schema_ser.json");
+function GetClassNames(schema: SchemaFile)
+{
+    return schema.roots.map(r => CleanupSchemaName(r.name));
+}
+
+function GetClassToFileMapping(schemas: SchemaFile[]) 
+{
+    let map = {};
+    schemas.forEach((schema) => {
+        GetClassNames(schema).forEach((classname) => {
+            map[classname] = schema.originalFileName;
+        })
+    });
+    return map;
+}
+
+function GetSchemasInDir(dir: string)
+{
+    let schemas: SchemaFile[] = [];
+    fs.readdirSync(dir).forEach((path) => {
+        if (path.endsWith(".json")){
+            const json = JSON.parse(fs.readFileSync(require("path").join(dir, path)).toString());
+            schemas.push(json as SchemaFile);
+        }
+    })
+    return schemas;
+}
+
+function GenCodeForSchemaDir(dir: string)
+{
+    let schemas = GetSchemasInDir(dir);
+    let mapping = GetClassToFileMapping(schemas);
+
+    schemas.forEach((schema) => {
+        GenCodeForSchemaFile(schema, mapping);
+    })
+}
+GenCodeForSchemaDir("input");

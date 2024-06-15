@@ -163,12 +163,19 @@ function AnalyzeSchema(filename: string, rawSchema: any)
 async function ConvertSchemaTS(filename: string)
 {
     let rawSchema = await EvaluateSchemaFile(filename);
-
-    fs.writeFileSync("schema_ser_raw.json", JSON.stringify(rawSchema, null, 4));
-
     let outputSchema = AnalyzeSchema(filename, rawSchema);
 
-    fs.writeFileSync("schema_ser.json", JSON.stringify(outputSchema, null, 4));
+    fs.writeFileSync(filename.replace(".ts", ".json"), JSON.stringify(outputSchema, null, 4));
 }
 
-ConvertSchemaTS('./schema.ts');
+
+function ConvertSchemaTSInDir(dir: string)
+{
+    fs.readdirSync(dir).forEach((path) => {
+        if (path.endsWith(".ts")){
+            ConvertSchemaTS(require("path").join(dir, path));
+        }
+    })
+}
+
+ConvertSchemaTSInDir('./input');
