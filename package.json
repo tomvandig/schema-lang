@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@types/node": "^20.14.2",
+    "esbuild": "^0.21.4",
+    "sha.js": "^2.4.11"
+  },
+  "name": "ts-as-schema",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "esbuild define.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
+    "gen": "esbuild gen-code.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
