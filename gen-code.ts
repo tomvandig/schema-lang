@@ -102,10 +102,12 @@ class TSCodeGen
 {
     code: CodeFormat;
     mainInclude: string;
+    classToFileMap: any;
 
-    constructor(mainInclude: string)
+    constructor(mainInclude: string, classToFileMap: any)
     {
         this.mainInclude = mainInclude;
+        this.classToFileMap = classToFileMap;
     }
 
     GenTypeForValue(value: SchemaClassValue)
@@ -163,7 +165,7 @@ class TSCodeGen
     {
         this.code.EmitCode(`// generated code for ${schema.name}`);
 
-        this.code.EmitCode(`class ${CleanupSchemaName(schema.name)}`)
+        this.code.EmitCode(`export class ${CleanupSchemaName(schema.name)}`)
         this.code.StartBlock();
 
         schema.classes.forEach((schemaClass) => {
@@ -198,6 +200,17 @@ class TSCodeGen
         this.code.EmitCode(`import { Rel } from "${this.mainInclude}"`);
         this.code.NewLine();
 
+        // TODO: scan for relevant
+        Object.keys(this.classToFileMap).forEach((className) => {
+            let filename = this.classToFileMap[className];
+            if (schemaFile.originalFileName.indexOf(filename.replace("./", "")) == -1)
+            {
+                this.code.EmitCode(`import { ${className} } from "${filename}"`);
+            }
+        })
+
+        this.code.NewLine();
+
         schemaFile.roots.forEach((root) => {
             this.GenCodeForSchema(root);
         })
@@ -212,7 +225,7 @@ function GenCodeForSchemaFile(schema: SchemaFile, classToFileMap: {})
 
     let mainInclude = "../sm_primitives.ts";
 
-    let codeGen = new TSCodeGen(mainInclude);
+    let codeGen = new TSCodeGen(mainInclude, classToFileMap);
     let code = codeGen.GenCodeForSchemaFile(schema);
     fs.writeFileSync(require("path").join(outputFileName), code);
 }
@@ -227,7 +240,10 @@ function GetClassToFileMapping(schemas: SchemaFile[])
     let map = {};
     schemas.forEach((schema) => {
         GetClassNames(schema).forEach((classname) => {
-            map[classname] = schema.originalFileName;
+            let filename = schema.originalFileName;
+            filename = filename.replace("input\\", "");
+            filename = `./${filename}`;
+            map[classname] = filename;
         })
     });
     return map;
