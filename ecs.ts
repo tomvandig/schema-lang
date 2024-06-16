@@ -1,5 +1,6 @@
+import { ECSID } from "./sm_primitives";
 
-export class component 
+export class Component 
 {
     name: string;
     payload: any;
@@ -10,20 +11,10 @@ export class component
     }
 }
 
-export class ComponentSet
+export class ECS
 {
-    components: Map<string, component>;
-
-    constructor()
-    {
-        this.components = new Map();
-    }
-}
-
-export class ecs
-{
-    parents: Map<string, string[]>;
-    entityToComponentSet: Map<string, ComponentSet>;
+    parents: Map<ECSID, ECSID[]>;
+    entityToComponentSet: Map<ECSID, Component>;
 
     constructor()
     {
@@ -31,29 +22,23 @@ export class ecs
         this.entityToComponentSet = new Map();
     }
 
-    AddComponent(entityId: string, componentName: string, component: any)
+    AddComponent(ecsid: ECSID, component: any)
     {
-        if (!this.entityToComponentSet.get(entityId))
+        if (this.entityToComponentSet.get(ecsid))
         {
-            this.entityToComponentSet.set(entityId, new ComponentSet());
-        }
-        let set = this.entityToComponentSet.get(entityId)!;
-
-        if (set.components.get(componentName))
-        {
-            throw new Error(`Setting duplicate component on name ${componentName}`);   
+            throw new Error(`Setting duplicate component on name ${ECSID.toString()}`);   
         }
 
-        set.components.set(componentName, component);
+        this.entityToComponentSet.set(ecsid, component);
     }
 
-    AddParent(entityId: string, parentEntityId: string)
+    AddParent(ecsid: ECSID, parentECSID: ECSID)
     {
-        if (!this.parents.get(entityId))
+        if (!this.parents.get(ecsid))
         {
-            this.parents.set(entityId, []);
+            this.parents.set(ecsid, []);
         }
 
-        this.parents.get(entityId)?.push(parentEntityId);
+        this.parents.get(ecsid)?.push(parentECSID);
     }
 }

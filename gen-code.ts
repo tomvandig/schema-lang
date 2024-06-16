@@ -165,7 +165,7 @@ class TSCodeGen
         }
         if (value.type === "relationship")
         {
-            this.code.EmitCode(`${outputName} = { rel: ${inputName}.entityId };`);
+            this.code.EmitCode(`${outputName} = { ecsid: ${inputName}.ecsid.ToString() };`);
         }
         if (value.type === "array")
         {
@@ -217,7 +217,7 @@ class TSCodeGen
         if (value.type === "relationship")
         {
             let className = CleanupSchemaName(value.withClasses.name);
-            this.code.EmitCode(`${outputName} = new Rel<${className}>(${inputName}.rel);`);
+            this.code.EmitCode(`${outputName} = new Rel<${className}>(ECSID.FromString(${inputName}.ecsid));`);
             return;
         }
         if (value.type === "array")
@@ -285,7 +285,7 @@ class TSCodeGen
         this.code = new CodeFormat();
 
         this.code.EmitCode(`// generated code for ${schemaFile.originalFileName}`);
-        this.code.EmitCode(`import { Rel } from "${this.mainInclude}"`);
+        this.code.EmitCode(`import { Rel, ECSID } from "${this.mainInclude}"`);
         this.code.NewLine();
 
         // TODO: scan for relevant
