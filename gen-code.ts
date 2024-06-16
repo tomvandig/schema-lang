@@ -195,12 +195,57 @@ class TSCodeGen
             this.GenExportCodeForNamedValue(value);
         })
     }
+
+    GenImportCodeForValue(inputName: string, outputName: string, value: SchemaClassValue)
+    {
+        if (typeof value === "string")
+        {
+            this.code.EmitCode(`${outputName} = ${inputName};`);
+            return;
+        }
+        if (value.type === "enum")
+        {
+            this.code.EmitCode(`${outputName} = ${inputName};`);
+            return;
+        }
+        if (value.type === "composition")
+        {
+            let className = CleanupSchemaName(value.ofClasses.name);
+            this.code.EmitCode(`${outputName} = ${className}.FromJSON(${inputName});`);
+            return;
+        }
+        if (value.type === "relationship")
+        {
+            let className = CleanupSchemaName(value.withClasses.name);
+            this.code.EmitCode(`${outputName} = new Rel<${className}>(${inputName}.rel);`);
+            return;
+        }
+        if (value.type === "array")
+        {
+            this.code.EmitCode(`${outputName} = []`);
+            this.code.EmitCode(`${inputName}.forEach((obj) => `, false);
+            this.code.StartBlock();
+            this.code.EmitCode(`let out;`);
+            this.GenImportCodeForValue("obj", "out", value.arrayType);
+            this.code.EmitCode(`${outputName}.push(out)`);
+            this.code.EndBlock();
+            this.code.EmitCode(`);`);
+            return;
+        }
+        return "<unknown_export_type>";
+    }
+
+    GenImportCodeForNamedValue(value: SchemaClassNamedValue)
+    {
+        this.GenImportCodeForValue(`__import.${value.name}`, `instance.${value.name}`, value.type);
+    }
+
     GenImportCodeForClass(schema: SchemaClass)
     {
         this.code.EmitCode(`// ${schema.name}`);
         this.code.EmitCode(`// ${schema.hash}`);
         schema.values.forEach((value) => {
-            this.code.EmitCode(`instance.${value.name} = __import.${value.name};`);
+            this.GenImportCodeForNamedValue(value);
         })
     }
 
