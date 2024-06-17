@@ -253,7 +253,7 @@ class TSCodeGen
     {
         this.code.EmitCode(`// generated code for ${schema.name}`);
 
-        this.code.EmitCode(`export class ${CleanupSchemaName(schema.name)}`)
+        this.code.EmitCode(`export class ${CleanupSchemaName(schema.name)}  implements ComponentInstance`)
         this.code.StartBlock();
 
         schema.classes.forEach((schemaClass) => {
@@ -285,7 +285,7 @@ class TSCodeGen
         this.code = new CodeFormat();
 
         this.code.EmitCode(`// generated code for ${schemaFile.originalFileName}`);
-        this.code.EmitCode(`import { Rel, ECSID } from "${this.mainInclude}"`);
+        this.code.EmitCode(`import { Rel, ECSID, ComponentInstance } from "${this.mainInclude}"`);
         this.code.NewLine();
 
         // TODO: scan for relevant

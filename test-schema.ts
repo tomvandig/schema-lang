@@ -2,6 +2,7 @@ import { ECS } from "./ecs";
 import { ifc_profile_0 } from "./output/otherschema";
 import { ifc_geometry_extrude_0 } from "./output/schema";
 import { ECSID, Rel } from "./sm_primitives";
+import * as fs from "fs";
 
 let geom = new ifc_geometry_extrude_0();
 
@@ -29,5 +30,11 @@ let imported = ifc_geometry_extrude_0.FromJSON(exported);
 console.log(JSON.stringify(imported, null, 4));
 
 
+let entity1 = new ECSID(["entity1"]);
 let ecs = new ECS();
-ecs.AddComponent(new ECSID(["object1"]), geom);
+ecs.AddComponent(entity1, geom);
+ecs.AddParent(entity1, new ECSID([]))
+
+let exportedECS = ecs.ExportToJSON();
+
+fs.writeFileSync("ecs.json", JSON.stringify(exportedECS, null, 4));

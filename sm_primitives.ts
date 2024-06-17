@@ -1,5 +1,10 @@
 const ECSID_DELIM = ".";
 
+export interface ComponentInstance
+{
+    ToJSON(__export: any);
+}
+
 export class ECSID
 {
     parts: string[];
@@ -17,6 +22,11 @@ export class ECSID
     ToString()
     {
         return this.parts.join(ECSID_DELIM);
+    }
+
+    IsRoot()
+    {
+        return this.parts.length === 0;
     }
 }
 
