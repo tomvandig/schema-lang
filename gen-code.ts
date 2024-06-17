@@ -76,6 +76,12 @@ class CodeFormat
         }
         this.currentBlock = newBlock
     }
+    
+    StartLooseBlock()
+    {
+        this.EmitCode("", false);
+        this.StartBlock();
+    }
 
     EndBlock()
     {
@@ -182,18 +188,23 @@ class TSCodeGen
         return "<unknown_export_type>";
     }
 
-    GenExportCodeForNamedValue(value: SchemaClassNamedValue)
+    GenExportCodeForNamedValue(value: SchemaClassNamedValue, exportname: string)
     {
-        this.GenExportCodeForValue(`this.${value.name}`, `__export.${value.name}`, value.type);
+        this.GenExportCodeForValue(`this.${value.name}`, `${exportname}.${value.name}`, value.type);
     }
 
     GenExportCodeForClass(schema: SchemaClass)
     {
         this.code.EmitCode(`// ${schema.name}`);
         this.code.EmitCode(`// ${schema.hash}`);
+        this.code.StartLooseBlock();
+        this.code.EmitCode(`let __hash = "${schema.hash}"`);
+        let exportName = `__export[__hash]`;
+        this.code.EmitCode(`${exportName} = { name: "${schema.name}"}`)
         schema.values.forEach((value) => {
-            this.GenExportCodeForNamedValue(value);
+            this.GenExportCodeForNamedValue(value, exportName);
         })
+        this.code.EndBlock();
     }
 
     GenImportCodeForValue(inputName: string, outputName: string, value: SchemaClassValue)
@@ -235,18 +246,22 @@ class TSCodeGen
         return "<unknown_export_type>";
     }
 
-    GenImportCodeForNamedValue(value: SchemaClassNamedValue)
+    GenImportCodeForNamedValue(value: SchemaClassNamedValue, importName: string)
     {
-        this.GenImportCodeForValue(`__import.${value.name}`, `instance.${value.name}`, value.type);
+        this.GenImportCodeForValue(`${importName}.${value.name}`, `instance.${value.name}`, value.type);
     }
 
     GenImportCodeForClass(schema: SchemaClass)
     {
         this.code.EmitCode(`// ${schema.name}`);
         this.code.EmitCode(`// ${schema.hash}`);
+        this.code.StartLooseBlock();
+        this.code.EmitCode(`let _hash = "${schema.hash}";`);
+        let importName = `__import[_hash]`;
         schema.values.forEach((value) => {
-            this.GenImportCodeForNamedValue(value);
+            this.GenImportCodeForNamedValue(value, importName);
         })
+        this.code.EndBlock();
     }
 
     GenCodeForSchema(schema: Schema)
