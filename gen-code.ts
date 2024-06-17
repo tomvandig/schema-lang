@@ -271,6 +271,15 @@ class TSCodeGen
         this.code.EmitCode(`export class ${CleanupSchemaName(schema.name)}  implements ComponentInstance`)
         this.code.StartBlock();
 
+        this.code.EmitCode(`static hashGroup = [`);
+
+        for (let i = 0; i < schema.classes.length; i++)
+        {
+            this.code.EmitCode(`\t"${schema.classes[i].hash}"` + (i === schema.classes.length - 1 ? "" : ","));
+        }
+        this.code.EmitCode(`];`);
+        this.code.NewLine();
+
         schema.classes.forEach((schemaClass) => {
             this.GenDefCodeForClass(schemaClass);
         })
