@@ -7,6 +7,18 @@ export class Component
     {
         this.classesByHash = new Map();
     }
+
+    AsJSON()
+    {
+        let classes = {};
+
+        for (let [hash, classtype] of this.classesByHash)
+        {
+            classes[hash] = classtype;   
+        }
+        
+        return classes;
+    }
 }
 
 export class ECS
@@ -57,6 +69,21 @@ export class ECS
 
         this.parents.get(ecsid)?.push(parentECSID);
         this.children.get(parentECSID)?.push(ecsid);
+    }
+
+    GetAs<T>(obj: T, ecsid: ECSID): T | undefined
+    {
+        let component = this.components.get(ecsid);
+
+        if (!component) {
+            return undefined;
+        }
+
+        //@ts-ignore // TODO
+        // TODO: check hash group
+
+        //@ts-ignore // TODO
+        return obj.FromJSON(component.AsJSON());
     }
 
     ExportToJSON()

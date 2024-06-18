@@ -222,7 +222,7 @@ class TSCodeGen
         if (value.type === "composition")
         {
             let className = CleanupSchemaName(value.ofClasses.name);
-            this.code.EmitCode(`${outputName} = ${className}.FromJSON(${inputName});`);
+            this.code.EmitCode(`${outputName} = new ${className}().FromJSON(${inputName});`);
             return;
         }
         if (value.type === "relationship")
@@ -292,9 +292,9 @@ class TSCodeGen
         this.code.EndBlock();
 
         
-        this.code.EmitCode(`static FromJSON(__import)`, false)
+        this.code.EmitCode(`FromJSON(__import)`, false)
         this.code.StartBlock();
-        this.code.EmitCode(`let instance = new ${CleanupSchemaName(schema.name)}()`)
+        this.code.EmitCode(`let instance = this;//new ${CleanupSchemaName(schema.name)}()`)
         schema.classes.forEach((schemaClass) => {
             this.GenImportCodeForClass(schemaClass);
         })
