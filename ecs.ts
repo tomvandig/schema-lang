@@ -2,10 +2,10 @@ import { ECSID, ComponentInstance } from "./sm_primitives";
 
 export class Component 
 {
-    payload: ComponentInstance;
-    constructor(payload: any)
+    classesByHash: Map<string, any>;
+    constructor()
     {
-        this.payload = payload;
+        this.classesByHash = new Map();
     }
 }
 
@@ -24,12 +24,24 @@ export class ECS
 
     AddComponent(ecsid: ECSID, component: ComponentInstance)
     {
+        let classes = {};
+        component.ToJSON(classes);
+
+        this.AddClasses(ecsid, classes);
+    }
+
+    AddClasses(ecsid: ECSID, componentClassesByHash: any)
+    {
         if (this.components.get(ecsid))
         {
             throw new Error(`Setting duplicate component on name ${ECSID.toString()}`);   
         }
 
-        this.components.set(ecsid, new Component(component));
+        let comp = new Component();
+        Object.keys(componentClassesByHash).forEach((hash) => {
+            comp.classesByHash.set(hash, componentClassesByHash[hash]);
+        })
+        this.components.set(ecsid, comp);
     }
 
     AddParent(ecsid: ECSID, parentECSID: ECSID)
@@ -63,14 +75,37 @@ export class ECS
 
         for (let [id, component] of this.components) 
         {
-            let output = {};
-            component.payload.ToJSON(output);
+            let exportedComponent = {};
+            for (let [hash, comp] of component.classesByHash)
+            {
+                exportedComponent[hash] = comp;
+            }
             json.components.push({
                 id: id.ToString(),
-                component: output
+                classes: exportedComponent
             })
         } 
         
         return json;
+    }
+
+    static ImportFromJSON(json: any)
+    {
+        let ecs = new ECS();
+
+        json.tree.forEach((item) => {
+            let parent = ECSID.FromString(item.id);
+            item.children.forEach((child) => {
+                ecs.AddParent(ECSID.FromString(child), parent);
+            })
+        });
+
+        json.components.forEach((component) => {
+            let id = ECSID.FromString(component.id);
+            let classes = component.classes;
+            ecs.AddClasses(id, classes);
+        });
+
+        return ecs;
     }
 }

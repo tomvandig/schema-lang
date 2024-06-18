@@ -38,3 +38,8 @@ ecs.AddParent(entity1, new ECSID([]))
 let exportedECS = ecs.ExportToJSON();
 
 fs.writeFileSync("ecs.json", JSON.stringify(exportedECS, null, 4));
+
+let importedECS = ECS.ImportFromJSON(exportedECS);
+let expimportedECS = importedECS.ExportToJSON();
+
+console.log(JSON.stringify(exportedECS) === JSON.stringify(expimportedECS));
