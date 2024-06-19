@@ -44,6 +44,6 @@ let expimportedECS = importedECS.ExportToJSON();
 
 console.log(JSON.stringify(exportedECS) === JSON.stringify(expimportedECS));
 
-let comp = ecs.GetAs(new ifc_geometry_extrude_0(), entity1);
+let comp = ecs.GetAs(new ifc_geometry_extrude_1(), entity1);
 
 console.log(comp);

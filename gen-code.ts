@@ -258,9 +258,12 @@ class TSCodeGen
         this.code.StartLooseBlock();
         this.code.EmitCode(`let _hash = "${schema.hash}";`);
         let importName = `__import[_hash]`;
+        this.code.EmitCode(`if (${importName}) `, false);
+        this.code.StartBlock();
         schema.values.forEach((value) => {
             this.GenImportCodeForNamedValue(value, importName);
         })
+        this.code.EndBlock();
         this.code.EndBlock();
     }
 
