@@ -283,6 +283,12 @@ class TSCodeGen
         this.code.EmitCode(`];`);
         this.code.NewLine();
 
+        this.code.EmitCode(`GetComponentName() `, false);
+        this.code.StartBlock();
+        this.code.EmitCode(`return "${schema.name}"`);
+        this.code.EndBlock();
+        this.code.NewLine();
+
         schema.classes.forEach((schemaClass) => {
             this.GenDefCodeForClass(schemaClass);
         })

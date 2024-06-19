@@ -3,6 +3,7 @@ const ECSID_DELIM = ".";
 export interface ComponentInstance
 {
     ToJSON(__export: any);
+    GetComponentName(): string;
 }
 
 export class ECSID
