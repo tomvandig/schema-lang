@@ -25,6 +25,11 @@ export class ECSID
         return new ECSID([...this.parts, part]);
     }
 
+    PushOther(other: ECSID)
+    {
+        return new ECSID([...this.parts, ...other.parts]);
+    }
+
     Pop()
     {
         return new ECSID([...this.parts.slice(0, -1)])

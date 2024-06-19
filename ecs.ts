@@ -54,8 +54,8 @@ export class Component
 
 export class ECS
 {
-    parents: Map<ECSID, ECSID[]>;
-    children: Map<ECSID, ECSID[]>;
+    parents: Map<string, string[]>;
+    children: Map<string, string[]>;
     components: Map<ECSID, Component>;
 
     constructor()
@@ -89,17 +89,17 @@ export class ECS
 
     AddParent(ecsid: ECSID, parentECSID: ECSID)
     {
-        if (!this.parents.get(ecsid))
+        if (!this.parents.get(ecsid.ToString()))
         {
-            this.parents.set(ecsid, []);
+            this.parents.set(ecsid.ToString(), []);
         }
-        if (!this.children.get(parentECSID))
+        if (!this.children.get(parentECSID.ToString()))
         {
-            this.children.set(parentECSID, []);
+            this.children.set(parentECSID.ToString(), []);
         }
 
-        this.parents.get(ecsid)?.push(parentECSID);
-        this.children.get(parentECSID)?.push(ecsid);
+        this.parents.get(ecsid.ToString())?.push(parentECSID.ToString());
+        this.children.get(parentECSID.ToString())?.push(ecsid.ToString());
     }
 
     GetAs<T>(type: { new(): T ;}, ecsid: ECSID): T | undefined
@@ -161,8 +161,8 @@ export class ECS
 
         for (let [entity, children] of this.children) {
             json.tree.push({
-                id: entity.ToString(),
-                children: children.map((child) => child.ToString())
+                id: entity,
+                children: children.map((child) => child)
             })
         }
 
