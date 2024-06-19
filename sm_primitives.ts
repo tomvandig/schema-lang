@@ -27,7 +27,7 @@ export class ECSID
 
     Pop()
     {
-        return new ECSID([...this.parts.slice(0, -2)])
+        return new ECSID([...this.parts.slice(0, -1)])
     }
 
     GetLast()
