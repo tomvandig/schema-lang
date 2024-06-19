@@ -3,11 +3,9 @@ import { ECSID, ComponentInstance } from "./sm_primitives";
 export class Component 
 {
     classesByHash: Map<string, any>;
-    name: string;
-    constructor(name: string)
+    constructor()
     {
         this.classesByHash = new Map();
-        this.name = name;
     }
 
     ContainsHashGroup(group: string[])
@@ -67,12 +65,12 @@ export class ECS
         this.components = new Map();
     }
 
-    AddComponent(ecsid: ECSID, component: ComponentInstance)
+    AddComponent(ecsid: ECSID, componentName: string, component: ComponentInstance)
     {
         let classes = {};
         component.ToJSON(classes);
 
-        this.AddClasses(ecsid, component.GetComponentName(), classes);
+        this.AddClasses(ecsid, componentName, classes);
     }
 
     AddClasses(ecsid: ECSID, componentName: string, componentClassesByHash: any)
@@ -82,11 +80,11 @@ export class ECS
             throw new Error(`Setting duplicate component on name ${ECSID.toString()}`);   
         }
 
-        let comp = new Component(componentName);
+        let comp = new Component();
         Object.keys(componentClassesByHash).forEach((hash) => {
             comp.classesByHash.set(hash, componentClassesByHash[hash]);
         })
-        this.components.set(ecsid, comp);
+        this.components.set(ecsid.Push(componentName), comp);
     }
 
     AddParent(ecsid: ECSID, parentECSID: ECSID)
@@ -175,9 +173,10 @@ export class ECS
             {
                 exportedComponent[hash] = comp;
             }
+            let entity = id.Pop();
             json.components.push({
-                id: id.ToString(),
-                name: component.name,
+                id: entity.ToString(),
+                name: id.GetLast(),
                 classes: exportedComponent
             })
         } 

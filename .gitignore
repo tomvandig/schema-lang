@@ -2,4 +2,4 @@
 out.js
 input/*.json
 output
-ecs.json
+model.ifc5.json

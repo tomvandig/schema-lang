@@ -30,14 +30,14 @@ let imported = new ifc_geometry_extrude_0().FromJSON(exported);
 console.log(JSON.stringify(imported, null, 4));
 
 
-let entity1 = new ECSID(["entity1"]);
+let entity1 = new ECSID(["station"]);
 let ecs = new ECS();
-ecs.AddComponent(entity1, geom);
+ecs.AddComponent(entity1, "geom", geom);
 ecs.AddParent(entity1, new ECSID([]))
 
 let exportedECS = ecs.ExportToJSON();
 
-fs.writeFileSync("ecs.json", JSON.stringify(exportedECS, null, 4));
+fs.writeFileSync("model.ifc5.json", JSON.stringify(exportedECS, null, 4));
 
 let importedECS = ECS.ImportFromJSON(exportedECS);
 let expimportedECS = importedECS.ExportToJSON();
