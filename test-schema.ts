@@ -70,9 +70,13 @@ let expimportedECS = importedECS.ExportToJSON();
 
 console.log(JSON.stringify(exportedECS) === JSON.stringify(expimportedECS));
 
-let comp = ecs.GetAs(ifc_profile_0, sound_barrier);
+let comp = ecs.GetAs(ifc_profile_0, sound_barrier.Push("geom"));
+let comp1 = ecs.GetAs(ifc_profile_0, station1.PushOther(sound_barrier).Push("geom"));
+let comp2 = ecs.GetAs(ifc_profile_0, station2.PushOther(sound_barrier).Push("geom"));
 
 console.log(comp);
+console.log(comp1);
+console.log(comp2);
 
 let comps = ecs.QueryComponentsByType(ifc_geometry_extrude_0);
 

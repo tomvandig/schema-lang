@@ -56,7 +56,7 @@ export class ECS
 {
     parents: Map<string, string[]>;
     children: Map<string, string[]>;
-    components: Map<ECSID, Component>;
+    components: Map<string, Component>;
 
     constructor()
     {
@@ -75,7 +75,7 @@ export class ECS
 
     AddClasses(ecsid: ECSID, componentName: string, componentClassesByHash: any)
     {
-        if (this.components.get(ecsid))
+        if (this.components.get(ecsid.ToString()))
         {
             throw new Error(`Setting duplicate component on name ${ECSID.toString()}`);   
         }
@@ -84,7 +84,7 @@ export class ECS
         Object.keys(componentClassesByHash).forEach((hash) => {
             comp.classesByHash.set(hash, componentClassesByHash[hash]);
         })
-        this.components.set(ecsid.Push(componentName), comp);
+        this.components.set(ecsid.Push(componentName).ToString(), comp);
     }
 
     AddParent(ecsid: ECSID, parentECSID: ECSID)
@@ -104,7 +104,14 @@ export class ECS
 
     GetAs<T>(type: { new(): T ;}, ecsid: ECSID): T | undefined
     {
-        let component = this.components.get(ecsid);
+        let component = this.components.get(ecsid.ToString());
+
+        if (!component)
+        {
+            let componentName = ecsid.GetLast();
+            let entityName = ecsid.Pop().GetLast();
+            component = this.components.get(new ECSID([entityName, componentName]).ToString());
+        }
 
         if (!component) {
             return undefined;
@@ -128,7 +135,7 @@ export class ECS
             //@ts-ignore // TODO
             if (component.ContainsHashGroup(type.hashGroup))
             {
-                returnValue.push(id);
+                returnValue.push(ECSID.FromString(id));
             }
         });
 
@@ -173,10 +180,11 @@ export class ECS
             {
                 exportedComponent[hash] = comp;
             }
-            let entity = id.Pop();
+            let ecsid = ECSID.FromString(id);
+            let entity = ecsid.Pop();
             json.components.push({
                 id: entity.ToString(),
-                name: id.GetLast(),
+                name: ecsid.GetLast(),
                 classes: exportedComponent
             })
         } 
