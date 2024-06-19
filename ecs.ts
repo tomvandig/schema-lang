@@ -25,15 +25,20 @@ export class Component
 
     ContainsAnyHashOfGroup(group: string[])
     {
+        let count = 0;
         for (let i = 0; i < group.length; i++)
         {
             if (this.classesByHash.has(group[i]))
             {
-                return true;
+                count++;
+            }
+            else
+            {
+                break;
             }   
         }
 
-        return false;
+        return count > 0;
     }
 
     AsJSON()
@@ -116,6 +121,37 @@ export class ECS
 
         //@ts-ignore // TODO
         return new type().FromJSON(component.AsJSON());
+    }
+
+    QueryComponentIdsByType<T>(type: { new(): T ;}): ECSID[]
+    {
+        let returnValue: ECSID[] = [];
+        this.components.forEach((component, id) => {
+            //@ts-ignore // TODO
+            if (component.ContainsHashGroup(type.hashGroup))
+            {
+                returnValue.push(id);
+            }
+        });
+
+        return returnValue;
+    }
+
+    QueryComponentsByType<T>(type: { new(): T ;}): T[]
+    {
+        let returnValue: T[] = [];
+        this.components.forEach((component) => {
+            //@ts-ignore // TODO
+            if (component.ContainsHashGroup(type.hashGroup))
+            {
+                returnValue.push(
+                    //@ts-ignore // TODO
+                    new type().FromJSON(component.AsJSON())
+                );
+            }
+        });
+
+        return returnValue;
     }
 
     ExportToJSON()

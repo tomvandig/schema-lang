@@ -47,3 +47,11 @@ console.log(JSON.stringify(exportedECS) === JSON.stringify(expimportedECS));
 let comp = ecs.GetAs(ifc_profile_0, entity1);
 
 console.log(comp);
+
+let comps = ecs.QueryComponentsByType(ifc_geometry_extrude_0);
+
+console.log(comps);
+
+let compIds = ecs.QueryComponentIdsByType(ifc_geometry_extrude_0);
+
+console.log(compIds.map((c) => c.ToString()));
