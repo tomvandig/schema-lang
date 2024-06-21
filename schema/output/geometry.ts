@@ -75,4 +75,41 @@ export class ifc_geometry  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::geometry",
+    "classes": [
+        {
+            "name": "ifc::geometry",
+            "hash": "d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5",
+            "values": [
+                {
+                    "name": "vertices",
+                    "type": {
+                        "type": "array",
+                        "arrayType": "f32"
+                    }
+                },
+                {
+                    "name": "indices",
+                    "type": {
+                        "type": "array",
+                        "arrayType": "i32"
+                    }
+                },
+                {
+                    "name": "color",
+                    "type": {
+                        "type": "enum",
+                        "options": [
+                            "red",
+                            "green",
+                            "blue"
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}
 }

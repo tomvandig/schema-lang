@@ -51,4 +51,28 @@ export class ifc_transform  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::transform",
+    "classes": [
+        {
+            "name": "ifc::transform",
+            "hash": "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f",
+            "values": [
+                {
+                    "name": "x",
+                    "type": "f32"
+                },
+                {
+                    "name": "y",
+                    "type": "f32"
+                },
+                {
+                    "name": "z",
+                    "type": "f32"
+                }
+            ]
+        }
+    ]
+}
 }

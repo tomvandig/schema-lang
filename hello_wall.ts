@@ -4,9 +4,16 @@ import { ifc_geometry } from "./schema/output/geometry";
 import { ifc_spaceboundary } from "./schema/output/spaceboundary";
 import { ifc_transform } from "./schema/output/transform";
 import { ECSID, Rel } from "./lib/sm_primitives";
+import { Register } from "./schema/output";
 
 let ecs = new ECS();
 
+// register all schemas
+Register((schema: any) => {
+    ecs.RegisterSchema(schema);
+});
+
+// declare some helpers
 function AddTransform(id: ECSID, x: number, y: number, z: number)
 {
     let t = new ifc_transform();

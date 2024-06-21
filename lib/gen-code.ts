@@ -311,6 +311,9 @@ class TSCodeGen
         this.code.EmitCode(`return instance;`)
         this.code.EndBlock();
 
+        this.code.NewLine();
+        this.code.EmitCode(`static schemaJSON = ${JSON.stringify(schema, null, 4)}`);
+
         this.code.EndBlock();
     }
 
@@ -384,6 +387,31 @@ function GetSchemasInDir(dir: string)
     return schemas;
 }
 
+function GenIndex(classToFileMap: any)
+{
+    let code = new CodeFormat();
+   
+    code.EmitCode(`// Generated code`)
+
+    Object.keys(classToFileMap).forEach((className) => {
+        let filename = classToFileMap[className];
+        code.EmitCode(`import { ${className} } from "${filename}"`);
+    })
+
+    code.EmitCode(`export function Register(cb: (obj: any)=>void) `, false);
+    code.StartBlock();
+    Object.keys(classToFileMap).forEach((className) => {
+        code.EmitCode(`cb(${className});`);
+    });
+    code.EndBlock();
+    
+    Object.keys(classToFileMap).forEach((className) => {
+        code.EmitCode(`export { ${className} };`);
+    });
+
+    require("fs").writeFileSync("./schema/output/index.ts", code.ToString());
+}
+
 function GenCodeForSchemaDir(dir: string)
 {
     let schemas = GetSchemasInDir(dir);
@@ -392,5 +420,7 @@ function GenCodeForSchemaDir(dir: string)
     schemas.forEach((schema) => {
         GenCodeForSchemaFile(schema, mapping);
     })
+
+    GenIndex(mapping);
 }
-GenCodeForSchemaDir("schema/input");
+GenCodeForSchemaDir("./schema/input/");

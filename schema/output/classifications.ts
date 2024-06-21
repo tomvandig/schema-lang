@@ -51,6 +51,22 @@ export class ifc_buildingelement  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::buildingelement",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        },
+        {
+            "name": "ifc::buildingelement",
+            "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+            "values": []
+        }
+    ]
+}
 }
 // generated code for ifc::classification
 export class ifc_classification  implements ComponentInstance
@@ -83,6 +99,17 @@ export class ifc_classification  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::classification",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        }
+    ]
+}
 }
 // generated code for ifc::glazing
 export class ifc_glazing  implements ComponentInstance
@@ -130,6 +157,22 @@ export class ifc_glazing  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::glazing",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        },
+        {
+            "name": "ifc::glazing",
+            "hash": "cd727bb23dbfddd18b19247be51ec36882b9b0d3c38ffaa4acb5099dc603ad5e",
+            "values": []
+        }
+    ]
+}
 }
 // generated code for ifc::space
 export class ifc_space  implements ComponentInstance
@@ -177,6 +220,22 @@ export class ifc_space  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::space",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        },
+        {
+            "name": "ifc::space",
+            "hash": "5a97fcb57c99bd2e3a7643a8770b6240d7c84650414bd7965dff02ba76838440",
+            "values": []
+        }
+    ]
+}
 }
 // generated code for ifc::wall
 export class ifc_wall  implements ComponentInstance
@@ -239,6 +298,27 @@ export class ifc_wall  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::wall",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        },
+        {
+            "name": "ifc::buildingelement",
+            "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+            "values": []
+        },
+        {
+            "name": "ifc::wall",
+            "hash": "90c93c92343816fe1e06d954f670df2cbcd7c37061dcb1109f4c3d9bfc959e96",
+            "values": []
+        }
+    ]
+}
 }
 // generated code for ifc::window
 export class ifc_window  implements ComponentInstance
@@ -301,6 +381,27 @@ export class ifc_window  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::window",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        },
+        {
+            "name": "ifc::buildingelement",
+            "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+            "values": []
+        },
+        {
+            "name": "ifc::window",
+            "hash": "8402b3bfb32c38aff30a0ed4efec59dde99659e93ae3b976601bce68c85f85a0",
+            "values": []
+        }
+    ]
+}
 }
 // generated code for ifc::windowframe
 export class ifc_windowframe  implements ComponentInstance
@@ -348,4 +449,20 @@ export class ifc_windowframe  implements ComponentInstance
 		}
 		return instance;
 	}
+	
+	static schemaJSON = {
+    "name": "ifc::windowframe",
+    "classes": [
+        {
+            "name": "ifc::classification",
+            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+            "values": []
+        },
+        {
+            "name": "ifc::windowframe",
+            "hash": "7ab769f917a35d03b8ad963546f41dc1bf27b1a2651850bbc944260dd62d5832",
+            "values": []
+        }
+    ]
+}
 }

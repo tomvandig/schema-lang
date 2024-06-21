@@ -275,5 +275,248 @@
             }
         }
     ],
-    "schemas": []
+    "schemas": [
+        {
+            "name": "ifc::buildingelement",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                },
+                {
+                    "name": "ifc::buildingelement",
+                    "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::classification",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::glazing",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                },
+                {
+                    "name": "ifc::glazing",
+                    "hash": "cd727bb23dbfddd18b19247be51ec36882b9b0d3c38ffaa4acb5099dc603ad5e",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::space",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                },
+                {
+                    "name": "ifc::space",
+                    "hash": "5a97fcb57c99bd2e3a7643a8770b6240d7c84650414bd7965dff02ba76838440",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::wall",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                },
+                {
+                    "name": "ifc::buildingelement",
+                    "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+                    "values": []
+                },
+                {
+                    "name": "ifc::wall",
+                    "hash": "90c93c92343816fe1e06d954f670df2cbcd7c37061dcb1109f4c3d9bfc959e96",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::window",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                },
+                {
+                    "name": "ifc::buildingelement",
+                    "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+                    "values": []
+                },
+                {
+                    "name": "ifc::window",
+                    "hash": "8402b3bfb32c38aff30a0ed4efec59dde99659e93ae3b976601bce68c85f85a0",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::windowframe",
+            "classes": [
+                {
+                    "name": "ifc::classification",
+                    "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                    "values": []
+                },
+                {
+                    "name": "ifc::windowframe",
+                    "hash": "7ab769f917a35d03b8ad963546f41dc1bf27b1a2651850bbc944260dd62d5832",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "ifc::geometry",
+            "classes": [
+                {
+                    "name": "ifc::geometry",
+                    "hash": "d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5",
+                    "values": [
+                        {
+                            "name": "vertices",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "f32"
+                            }
+                        },
+                        {
+                            "name": "indices",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "i32"
+                            }
+                        },
+                        {
+                            "name": "color",
+                            "type": {
+                                "type": "enum",
+                                "options": [
+                                    "red",
+                                    "green",
+                                    "blue"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ifc::spaceboundary",
+            "classes": [
+                {
+                    "name": "ifc::spaceboundary",
+                    "hash": "d3914454212f0693140f2a7bb662de1e64617a1c7a8d2d62ae08342fdf8e0d31",
+                    "values": [
+                        {
+                            "name": "relatedSpace",
+                            "type": {
+                                "type": "relationship",
+                                "withClasses": {
+                                    "name": "ifc::space",
+                                    "classes": [
+                                        {
+                                            "name": "ifc::classification",
+                                            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                                            "values": []
+                                        },
+                                        {
+                                            "name": "ifc::space",
+                                            "hash": "5a97fcb57c99bd2e3a7643a8770b6240d7c84650414bd7965dff02ba76838440",
+                                            "values": []
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "relatedBuildingElement",
+                            "type": {
+                                "type": "relationship",
+                                "withClasses": {
+                                    "name": "ifc::buildingelement",
+                                    "classes": [
+                                        {
+                                            "name": "ifc::classification",
+                                            "hash": "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81",
+                                            "values": []
+                                        },
+                                        {
+                                            "name": "ifc::buildingelement",
+                                            "hash": "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c",
+                                            "values": []
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "PhysicalOrVirtualBoundary",
+                            "type": {
+                                "type": "enum",
+                                "options": [
+                                    "physical",
+                                    "virtual"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "InternalOrExternalBoundary",
+                            "type": {
+                                "type": "enum",
+                                "options": [
+                                    "internal",
+                                    "external"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ifc::transform",
+            "classes": [
+                {
+                    "name": "ifc::transform",
+                    "hash": "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f",
+                    "values": [
+                        {
+                            "name": "x",
+                            "type": "f32"
+                        },
+                        {
+                            "name": "y",
+                            "type": "f32"
+                        },
+                        {
+                            "name": "z",
+                            "type": "f32"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

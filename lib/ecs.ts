@@ -1,3 +1,4 @@
+import { Schema } from "./schema-def";
 import { ECSID, ComponentInstance, Rel } from "./sm_primitives";
 
 export class Component 
@@ -57,12 +58,20 @@ export class ECS
     parents: Map<string, string[]>;
     children: Map<string, string[]>;
     components: Map<string, Component>;
+    schemas: Map<string, Schema>;
 
     constructor()
     {
         this.parents = new Map();
         this.children = new Map();
         this.components = new Map();
+        this.schemas = new Map();
+    }
+
+    RegisterSchema(schema: any)
+    {
+        let schemaObject = schema.schemaJSON as Schema;
+        this.schemas.set(schemaObject.name, schemaObject);
     }
 
     AddComponent(ecsid: ECSID, componentName: string, component: ComponentInstance)
@@ -169,7 +178,7 @@ export class ECS
         let json = {
             tree: [] as any[],
             components: [] as any[],
-            schemas: [] as any[]
+            schemas: [] as Schema[]
         };
 
         for (let [entity, children] of this.children) {
@@ -195,7 +204,10 @@ export class ECS
             })
         }
 
-        // TODO: schemas
+        for (let [name, schema] of this.schemas)
+        {
+            json.schemas.push(schema);   
+        }
         
         return json;
     }
@@ -249,7 +261,9 @@ export class ECS
             ecs.AddClasses(id, name, classes);
         });
 
-        // TODO: schemas
+        json.schemas.forEach((schema) => {
+            ecs.RegisterSchema(schema);
+        });
 
         return ecs;
     }
