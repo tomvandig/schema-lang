@@ -39,7 +39,7 @@ On top of this, a composable ECS implementation is available in the `/lib` folde
 
 ```ts
 let ecs = new ECS();
-ecs.AddComponent("space", "boundary", boundaryComponent);
+ecs.AddComponent("spaceEntity", "boundary", boundaryComponent);
 
 ```
 
