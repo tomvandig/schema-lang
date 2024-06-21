@@ -57,6 +57,18 @@
             }
         },
         {
+            "id": "left_window",
+            "name": "transformation",
+            "classes": {
+                "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f": {
+                    "name": "ifc::transform",
+                    "x": 5,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        {
             "id": "right_window",
             "name": "classification",
             "classes": {
@@ -72,6 +84,18 @@
             }
         },
         {
+            "id": "right_window",
+            "name": "transformation",
+            "classes": {
+                "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f": {
+                    "name": "ifc::transform",
+                    "x": 10,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        {
             "id": "window_frame",
             "name": "classification",
             "classes": {
@@ -80,6 +104,18 @@
                 },
                 "7ab769f917a35d03b8ad963546f41dc1bf27b1a2651850bbc944260dd62d5832": {
                     "name": "ifc::windowframe"
+                }
+            }
+        },
+        {
+            "id": "window_frame",
+            "name": "transformation",
+            "classes": {
+                "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f": {
+                    "name": "ifc::transform",
+                    "x": 1,
+                    "y": 1,
+                    "z": 1
                 }
             }
         },
@@ -122,6 +158,42 @@
                 },
                 "5a97fcb57c99bd2e3a7643a8770b6240d7c84650414bd7965dff02ba76838440": {
                     "name": "ifc::space"
+                }
+            }
+        },
+        {
+            "id": "south_wall",
+            "name": "transformation",
+            "classes": {
+                "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f": {
+                    "name": "ifc::transform",
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        {
+            "id": "north_wall",
+            "name": "transformation",
+            "classes": {
+                "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f": {
+                    "name": "ifc::transform",
+                    "x": 10,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
+        {
+            "id": "space",
+            "name": "transformation",
+            "classes": {
+                "7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f": {
+                    "name": "ifc::transform",
+                    "x": 5,
+                    "y": 0,
+                    "z": 0
                 }
             }
         },

@@ -1,19 +1,33 @@
 import { ECS } from "./ecs";
 import { ifc_space, ifc_wall, ifc_window, ifc_windowframe } from "./output/classifications";
 import { ifc_spaceboundary } from "./output/spaceboundary";
+import { ifc_transform } from "./output/transform";
 import { ECSID, Rel } from "./sm_primitives";
 
 let ecs = new ECS();
+
+function AddTransform(id: ECSID, x: number, y: number, z: number)
+{
+    let t = new ifc_transform();
+    t.x = x;
+    t.y = y;
+    t.z = z;
+
+    ecs.AddComponent(id, "transformation", t);
+}
 
 // define a typical
 let typical_wall = new ECSID(["typical_wall"]);
 {
     let left_window = new ECSID(["left_window"]);
     ecs.AddComponent(left_window, "classification", new ifc_window());
+    AddTransform(left_window, 5, 0, 0);
     let right_window = new ECSID(["right_window"]);
     ecs.AddComponent(right_window, "classification", new ifc_window());
+    AddTransform(right_window, 10, 0, 0);
     let window_frame = new ECSID(["window_frame"]);
     ecs.AddComponent(window_frame, "classification", new ifc_windowframe());
+    AddTransform(window_frame, 1, 1, 1);
 
     ecs.AddParent(left_window, typical_wall);
     ecs.AddParent(right_window, typical_wall);
@@ -30,6 +44,11 @@ ecs.AddComponent(north_wall, "classification", new ifc_wall());
 let space = new ECSID(["space"]);
 ecs.AddComponent(space, "classification", new ifc_space());
 {
+    AddTransform(south_wall, 0, 0, 0);
+    AddTransform(north_wall, 10, 0, 0);
+    AddTransform(space, 5, 0, 0);
+
+
     ecs.AddParent(typical_wall, south_wall);
     ecs.AddParent(typical_wall, north_wall);
 
