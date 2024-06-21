@@ -21,7 +21,7 @@ export const spaceboundary = {
 
 See the `/schema/input` folder for example schema files.
 
-These schema files can be converted into a JSON representation, and also in `typescript` code. The JSON representation is used when the ECS is exported to JSON the `typescript` code can be found in `/schema/output` and is used to interface with the ECS.
+These schema files can be converted into a JSON representation, and also into `typescript` code. The JSON representation is used when the ECS is exported to JSON, the `typescript` code can be found in `/schema/output` and is used to interface with the ECS.
 
 Using this typescript code, a component can be constructed like this:
 
@@ -39,8 +39,7 @@ On top of this, a composable ECS implementation is available in the `/lib` folde
 
 ```ts
 let ecs = new ECS();
-let space = new ECSID(["space"]);
-ecs.AddComponent(spaceboundary, "boundary", boundaryComponent);
+ecs.AddComponent("space", "boundary", boundaryComponent);
 
 ```
 
@@ -51,5 +50,7 @@ In `hello_wall.ts` we construct a typical wall and instantiate it twice, once ov
 ecs.AddComponent(["north_wall", "typical_wall", "left_window", "window_frame"], redGeometryComponent);
 
 ```
+
+This operation adds a component to an id prefix (north_wall.typical_wall.left_window.window_frame.geometry) which overrides the existing component present on (window_frame.geometry).
 
 The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json`, to illustrate the working of the override, the file `hello_wall.geometrycolor.ifc5.json` is included which shows more clearly the ID prefixing and composition result for the geometry colors.
