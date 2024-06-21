@@ -1,5 +1,6 @@
 import { ECS } from "./ecs";
 import { ifc_space, ifc_wall, ifc_window, ifc_windowframe } from "./output/classifications";
+import { ifc_geometry } from "./output/geometry";
 import { ifc_spaceboundary } from "./output/spaceboundary";
 import { ifc_transform } from "./output/transform";
 import { ECSID, Rel } from "./sm_primitives";
@@ -14,6 +15,15 @@ function AddTransform(id: ECSID, x: number, y: number, z: number)
     t.z = z;
 
     ecs.AddComponent(id, "transformation", t);
+}
+
+function AddGeom(id: ECSID, color: "red"|"green"|"blue")
+{
+   let geom = new ifc_geometry();
+   geom.color = color;
+   geom.vertices = [];
+   geom.indices = [];
+   ecs.AddComponent(id, "geometry", geom);
 }
 
 // define a typical

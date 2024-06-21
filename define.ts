@@ -34,7 +34,7 @@ function AnalyzeValue(rawValue: any)
     } 
     if (Array.isArray(rawValue))
     {
-        if (typeof rawValue[0] === "string")
+        if (typeof rawValue[0] === "string" && rawValue.length > 1)
         {
             return {
                 type: "enum",

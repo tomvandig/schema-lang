@@ -121,6 +121,7 @@ class TSCodeGen
         if (typeof value === "string")
         {
             if (value === "f32") return "number";
+            if (value === "i32") return "number";
             if (value === "string") return "string";
             return "<unknown primitive>";
         }
