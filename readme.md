@@ -58,8 +58,8 @@ The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json`, to ill
 `hello_wall.geometrycolor.ifc5.json`:
 ```json
 {
-    "south_wall": {
-        "typical_wall": {
+    "south_wall": { <-- id prefixing hierarchy
+        "typical_wall": { <-- prefix = south_wall.typical_wall
             "color": "green",
             "left_window": {
                 "color": "red",
