@@ -8,6 +8,9 @@ import { ifc_space } from "./classifications.ts"
 import { ifc_wall } from "./classifications.ts"
 import { ifc_window } from "./classifications.ts"
 import { ifc_windowframe } from "./classifications.ts"
+import { example_childobject } from "./example.ts"
+import { example_otherobject } from "./example.ts"
+import { example_parentobject } from "./example.ts"
 import { ifc_spaceboundary } from "./spaceboundary.ts"
 import { ifc_transform } from "./transform.ts"
 
@@ -25,7 +28,7 @@ export class ifc_geometry  implements ComponentInstance
 	// ifc::geometry
 	vertices: number[];
 	indices: number[];
-	color: "red"|"green"|"blue";
+	color: ("red"|"green"|"blue");
 	ToJSON(__export: any){
 		// ifc::geometry
 		// d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5

@@ -8,6 +8,9 @@ import { ifc_space } from "./classifications.ts"
 import { ifc_wall } from "./classifications.ts"
 import { ifc_window } from "./classifications.ts"
 import { ifc_windowframe } from "./classifications.ts"
+import { example_childobject } from "./example.ts"
+import { example_otherobject } from "./example.ts"
+import { example_parentobject } from "./example.ts"
 import { ifc_geometry } from "./geometry.ts"
 import { ifc_transform } from "./transform.ts"
 
@@ -25,8 +28,8 @@ export class ifc_spaceboundary  implements ComponentInstance
 	// ifc::spaceboundary
 	relatedSpace: Rel<typeof ifc_space>;
 	relatedBuildingElement: Rel<typeof ifc_buildingelement>;
-	PhysicalOrVirtualBoundary: "physical"|"virtual";
-	InternalOrExternalBoundary: "internal"|"external";
+	PhysicalOrVirtualBoundary: ("physical"|"virtual");
+	InternalOrExternalBoundary: ("internal"|"external");
 	ToJSON(__export: any){
 		// ifc::spaceboundary
 		// d3914454212f0693140f2a7bb662de1e64617a1c7a8d2d62ae08342fdf8e0d31

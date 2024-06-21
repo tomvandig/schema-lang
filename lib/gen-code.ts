@@ -127,7 +127,7 @@ class TSCodeGen
         }
         if (value.type === "enum")
         {
-            return `${value.options.map(option => `"${option}"`).join("|")}`;
+            return `(${value.options.map(option => `"${option}"`).join("|")})`;
         }
         if (value.type === "composition")
         {

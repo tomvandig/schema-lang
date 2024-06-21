@@ -1,6 +1,9 @@
 // generated code for schema\input\classifications.ts
 import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
 
+import { example_childobject } from "./example.ts"
+import { example_otherobject } from "./example.ts"
+import { example_parentobject } from "./example.ts"
 import { ifc_geometry } from "./geometry.ts"
 import { ifc_spaceboundary } from "./spaceboundary.ts"
 import { ifc_transform } from "./transform.ts"

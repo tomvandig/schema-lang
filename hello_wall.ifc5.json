@@ -387,6 +387,300 @@
             ]
         },
         {
+            "name": "example::childobject",
+            "classes": [
+                {
+                    "name": "example::parentobject",
+                    "hash": "4977798611a94ed0eb60c64dbd3b2d82a5941200287af78477512f7f84975722",
+                    "values": [
+                        {
+                            "name": "stringValue",
+                            "type": "string"
+                        },
+                        {
+                            "name": "floatValue",
+                            "type": "f32"
+                        },
+                        {
+                            "name": "intValue",
+                            "type": "i32"
+                        },
+                        {
+                            "name": "enumValue",
+                            "type": {
+                                "type": "enum",
+                                "options": [
+                                    "option1",
+                                    "option2"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "composedValue",
+                            "type": {
+                                "type": "composition",
+                                "ofClasses": {
+                                    "name": "example::otherobject",
+                                    "classes": [
+                                        {
+                                            "name": "example::otherobject",
+                                            "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                            "values": []
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "relationship",
+                            "type": {
+                                "type": "relationship",
+                                "withClasses": {
+                                    "name": "example::otherobject",
+                                    "classes": [
+                                        {
+                                            "name": "example::otherobject",
+                                            "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                            "values": []
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "arrayOfStrings",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "string"
+                            }
+                        },
+                        {
+                            "name": "arrayOfFloats",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "f32"
+                            }
+                        },
+                        {
+                            "name": "arrayOfInts",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "i32"
+                            }
+                        },
+                        {
+                            "name": "arrayOfEnums",
+                            "type": {
+                                "type": "array",
+                                "arrayType": {
+                                    "type": "enum",
+                                    "options": [
+                                        "option1",
+                                        "option2"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "arrayOfComposed",
+                            "type": {
+                                "type": "array",
+                                "arrayType": {
+                                    "type": "composition",
+                                    "ofClasses": {
+                                        "name": "example::otherobject",
+                                        "classes": [
+                                            {
+                                                "name": "example::otherobject",
+                                                "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                                "values": []
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "arrayOfRelationShips",
+                            "type": {
+                                "type": "array",
+                                "arrayType": {
+                                    "type": "relationship",
+                                    "withClasses": {
+                                        "name": "example::otherobject",
+                                        "classes": [
+                                            {
+                                                "name": "example::otherobject",
+                                                "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                                "values": []
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "example::childobject",
+                    "hash": "04cfe7c237883839449fddc1b08b3f017c6d36af26affe9a35c41f5e5172bc73",
+                    "values": [
+                        {
+                            "name": "childValue",
+                            "type": "f32"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "example::otherobject",
+            "classes": [
+                {
+                    "name": "example::otherobject",
+                    "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                    "values": []
+                }
+            ]
+        },
+        {
+            "name": "example::parentobject",
+            "classes": [
+                {
+                    "name": "example::parentobject",
+                    "hash": "4977798611a94ed0eb60c64dbd3b2d82a5941200287af78477512f7f84975722",
+                    "values": [
+                        {
+                            "name": "stringValue",
+                            "type": "string"
+                        },
+                        {
+                            "name": "floatValue",
+                            "type": "f32"
+                        },
+                        {
+                            "name": "intValue",
+                            "type": "i32"
+                        },
+                        {
+                            "name": "enumValue",
+                            "type": {
+                                "type": "enum",
+                                "options": [
+                                    "option1",
+                                    "option2"
+                                ]
+                            }
+                        },
+                        {
+                            "name": "composedValue",
+                            "type": {
+                                "type": "composition",
+                                "ofClasses": {
+                                    "name": "example::otherobject",
+                                    "classes": [
+                                        {
+                                            "name": "example::otherobject",
+                                            "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                            "values": []
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "relationship",
+                            "type": {
+                                "type": "relationship",
+                                "withClasses": {
+                                    "name": "example::otherobject",
+                                    "classes": [
+                                        {
+                                            "name": "example::otherobject",
+                                            "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                            "values": []
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "arrayOfStrings",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "string"
+                            }
+                        },
+                        {
+                            "name": "arrayOfFloats",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "f32"
+                            }
+                        },
+                        {
+                            "name": "arrayOfInts",
+                            "type": {
+                                "type": "array",
+                                "arrayType": "i32"
+                            }
+                        },
+                        {
+                            "name": "arrayOfEnums",
+                            "type": {
+                                "type": "array",
+                                "arrayType": {
+                                    "type": "enum",
+                                    "options": [
+                                        "option1",
+                                        "option2"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "name": "arrayOfComposed",
+                            "type": {
+                                "type": "array",
+                                "arrayType": {
+                                    "type": "composition",
+                                    "ofClasses": {
+                                        "name": "example::otherobject",
+                                        "classes": [
+                                            {
+                                                "name": "example::otherobject",
+                                                "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                                "values": []
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        {
+                            "name": "arrayOfRelationShips",
+                            "type": {
+                                "type": "array",
+                                "arrayType": {
+                                    "type": "relationship",
+                                    "withClasses": {
+                                        "name": "example::otherobject",
+                                        "classes": [
+                                            {
+                                                "name": "example::otherobject",
+                                                "hash": "c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b",
+                                                "values": []
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "ifc::geometry",
             "classes": [
                 {
