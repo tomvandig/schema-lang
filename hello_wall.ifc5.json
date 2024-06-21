@@ -1,21 +1,46 @@
 {
-    "tree": [],
-    "components": [
+    "tree": [
+        {
+            "id": "typical_wall",
+            "children": [
+                "left_window",
+                "right_window"
+            ]
+        },
+        {
+            "id": "right_window",
+            "children": [
+                "window_frame"
+            ]
+        },
+        {
+            "id": "left_window",
+            "children": [
+                "window_frame"
+            ]
+        },
         {
             "id": "south_wall",
-            "name": "classification",
-            "classes": {
-                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
-                    "name": "ifc::classification"
-                },
-                "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c": {
-                    "name": "ifc::buildingelement"
-                },
-                "90c93c92343816fe1e06d954f670df2cbcd7c37061dcb1109f4c3d9bfc959e96": {
-                    "name": "ifc::wall"
-                }
-            }
+            "children": [
+                "typical_wall"
+            ]
         },
+        {
+            "id": "north_wall",
+            "children": [
+                "typical_wall"
+            ]
+        },
+        {
+            "id": "",
+            "children": [
+                "south_wall",
+                "north_wall",
+                "space"
+            ]
+        }
+    ],
+    "components": [
         {
             "id": "left_window",
             "name": "classification",
@@ -55,6 +80,36 @@
                 },
                 "7ab769f917a35d03b8ad963546f41dc1bf27b1a2651850bbc944260dd62d5832": {
                     "name": "ifc::windowframe"
+                }
+            }
+        },
+        {
+            "id": "south_wall",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c": {
+                    "name": "ifc::buildingelement"
+                },
+                "90c93c92343816fe1e06d954f670df2cbcd7c37061dcb1109f4c3d9bfc959e96": {
+                    "name": "ifc::wall"
+                }
+            }
+        },
+        {
+            "id": "north_wall",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c": {
+                    "name": "ifc::buildingelement"
+                },
+                "90c93c92343816fe1e06d954f670df2cbcd7c37061dcb1109f4c3d9bfc959e96": {
+                    "name": "ifc::wall"
                 }
             }
         },
