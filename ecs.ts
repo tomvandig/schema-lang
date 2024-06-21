@@ -218,6 +218,8 @@ export class ECS
             ecs.AddClasses(id, name, classes);
         });
 
+        // TODO: schemas
+
         return ecs;
     }
 }

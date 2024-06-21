@@ -1,0 +1,92 @@
+{
+    "tree": [],
+    "components": [
+        {
+            "id": "south_wall",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c": {
+                    "name": "ifc::buildingelement"
+                },
+                "90c93c92343816fe1e06d954f670df2cbcd7c37061dcb1109f4c3d9bfc959e96": {
+                    "name": "ifc::wall"
+                }
+            }
+        },
+        {
+            "id": "left_window",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c": {
+                    "name": "ifc::buildingelement"
+                },
+                "8402b3bfb32c38aff30a0ed4efec59dde99659e93ae3b976601bce68c85f85a0": {
+                    "name": "ifc::window"
+                }
+            }
+        },
+        {
+            "id": "right_window",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "d86b75ce0ef826fdaf9112cabefa6a1470d2822935afde123c659b5c1bdad12c": {
+                    "name": "ifc::buildingelement"
+                },
+                "8402b3bfb32c38aff30a0ed4efec59dde99659e93ae3b976601bce68c85f85a0": {
+                    "name": "ifc::window"
+                }
+            }
+        },
+        {
+            "id": "window_frame",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "7ab769f917a35d03b8ad963546f41dc1bf27b1a2651850bbc944260dd62d5832": {
+                    "name": "ifc::windowframe"
+                }
+            }
+        },
+        {
+            "id": "space",
+            "name": "classification",
+            "classes": {
+                "8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81": {
+                    "name": "ifc::classification"
+                },
+                "5a97fcb57c99bd2e3a7643a8770b6240d7c84650414bd7965dff02ba76838440": {
+                    "name": "ifc::space"
+                }
+            }
+        },
+        {
+            "id": "spaceboundary",
+            "name": "boundary",
+            "classes": {
+                "d3914454212f0693140f2a7bb662de1e64617a1c7a8d2d62ae08342fdf8e0d31": {
+                    "name": "ifc::spaceboundary",
+                    "relatedSpace": {
+                        "ecsid": "space.classification"
+                    },
+                    "relatedBuildingElement": {
+                        "ecsid": "south_wall.classification"
+                    },
+                    "PhysicalOrVirtualBoundary": "physical",
+                    "InternalOrExternalBoundary": "external"
+                }
+            }
+        }
+    ],
+    "schemas": []
+}

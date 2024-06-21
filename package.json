@@ -10,7 +10,8 @@
   "scripts": {
     "start": "esbuild define.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
     "gen": "esbuild gen-code.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
-    "test": "esbuild test-schema.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js"
+    "test": "esbuild test-schema.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
+    "hellowall": "esbuild hello_wall.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js"
   },
   "author": "",
   "license": "ISC",
