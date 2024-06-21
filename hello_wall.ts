@@ -89,6 +89,8 @@ AddGeom(north_wall.PushOther(typical_wall).Push("left_window").Push("window_fram
     ecs.AddComponent(spaceboundary, "boundary", boundaryComponent);
 }
 
+// dump the entire ECS to json, can be read back in
 require("fs").writeFileSync("hello_wall.ifc5.json", JSON.stringify(ecs.ExportToJSON(), null, 4));
 
+// dump a user friendly hierarchy of all geometry data, cannot be read back in
 require("fs").writeFileSync("hello_wall.geometrycolor.ifc5.json", JSON.stringify(ecs.FlattenToJSON(ifc_geometry), null, 4));
