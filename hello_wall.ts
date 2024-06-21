@@ -36,7 +36,7 @@ let typical_wall = new ECSID(["typical_wall"]);
     let right_window = new ECSID(["right_window"]);
     ecs.AddComponent(right_window, "classification", new ifc_window());
     AddTransform(right_window, 10, 0, 0);
-    AddGeom(left_window, "blue");
+    AddGeom(right_window, "blue");
     let window_frame = new ECSID(["window_frame"]);
     ecs.AddComponent(window_frame, "classification", new ifc_windowframe());
     AddTransform(window_frame, 1, 1, 1);
@@ -73,8 +73,8 @@ ecs.AddComponent(space, "classification", new ifc_space());
     ecs.AddParent(space, new ECSID([]));
 }
 
-// override south_wall left window from red to blue
-AddGeom(south_wall.PushOther(typical_wall).Push("left_window"), "blue");
+// override northwall, left window, frame from green to red
+AddGeom(north_wall.PushOther(typical_wall).Push("left_window").Push("window_frame"), "red");
 
 // construct relationships
 {
@@ -89,5 +89,6 @@ AddGeom(south_wall.PushOther(typical_wall).Push("left_window"), "blue");
     ecs.AddComponent(spaceboundary, "boundary", boundaryComponent);
 }
 
-
 require("fs").writeFileSync("hello_wall.ifc5.json", JSON.stringify(ecs.ExportToJSON(), null, 4));
+
+require("fs").writeFileSync("hello_wall.geometrycolor.ifc5.json", JSON.stringify(ecs.FlattenToJSON(ifc_geometry), null, 4));

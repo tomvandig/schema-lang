@@ -76,7 +76,7 @@
                     "name": "ifc::geometry",
                     "vertices": [],
                     "indices": [],
-                    "color": "blue"
+                    "color": "red"
                 }
             }
         },
@@ -104,6 +104,18 @@
                     "x": 10,
                     "y": 0,
                     "z": 0
+                }
+            }
+        },
+        {
+            "id": "right_window",
+            "name": "geometry",
+            "classes": {
+                "d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5": {
+                    "name": "ifc::geometry",
+                    "vertices": [],
+                    "indices": [],
+                    "color": "blue"
                 }
             }
         },
@@ -234,14 +246,14 @@
             }
         },
         {
-            "id": "south_wall.typical_wall.left_window",
+            "id": "north_wall.typical_wall.left_window.window_frame",
             "name": "geometry",
             "classes": {
                 "d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5": {
                     "name": "ifc::geometry",
                     "vertices": [],
                     "indices": [],
-                    "color": "blue"
+                    "color": "red"
                 }
             }
         },

@@ -1,0 +1,37 @@
+{
+    "south_wall": {
+        "typical_wall": {
+            "color": "green",
+            "left_window": {
+                "color": "red",
+                "window_frame": {
+                    "color": "green"
+                }
+            },
+            "right_window": {
+                "color": "blue",
+                "window_frame": {
+                    "color": "green"
+                }
+            }
+        }
+    },
+    "north_wall": {
+        "typical_wall": {
+            "color": "green",
+            "left_window": {
+                "color": "red",
+                "window_frame": {
+                    "color": "red"
+                }
+            },
+            "right_window": {
+                "color": "blue",
+                "window_frame": {
+                    "color": "green"
+                }
+            }
+        }
+    },
+    "space": {}
+}

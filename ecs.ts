@@ -199,6 +199,37 @@ export class ECS
         return json;
     }
 
+    FlattenToJSONRecursive(type: {new(): ComponentInstance}, node: string, nodeID: ECSID, output: any)
+    {
+        // component
+        let component = this.GetAs(type, nodeID.Push("geometry"));
+
+        if (component)
+        {
+            //@ts-ignore
+            output.color = component.color;
+        }
+
+        let children = this.children.get(node);
+
+        if (children)
+        {
+            children?.forEach((child) => {
+                output[child] = {};
+                this.FlattenToJSONRecursive(type, child, nodeID.Push(child), output[child]);
+            });
+        }
+    }
+
+    FlattenToJSON(type: {new(): ComponentInstance})
+    {
+        let output = {} as any;
+
+        this.FlattenToJSONRecursive(type, "", new ECSID([]), output);
+
+        return output;
+    }
+
     static ImportFromJSON(json: any)
     {
         let ecs = new ECS();
