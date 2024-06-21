@@ -23,7 +23,7 @@ See the `/schema/input` folder for example schema files.
 
 These schema files can be converted into a JSON representation, and also into `typescript` code. The JSON representation is used when the ECS is exported to JSON, the `typescript` code can be found in `/schema/output` and is used to interface with the ECS.
 
-Using this typescript code, a component can be constructed like this:
+Using this typescript code, a component can be constructed like this using the generated code, including auto-complete support:
 
 ```ts
 let boundaryComponent = new ifc_spaceboundary();
