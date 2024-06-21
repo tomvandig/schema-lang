@@ -48,7 +48,7 @@ In `hello_wall.ts` we construct a typical wall and instantiate it twice, once ov
 
 ```ts
 // override northwall, left window, frame from green to red
-AddGeom(north_wall.PushOther(typical_wall).Push("left_window").Push("window_frame"), "red");
+ecs.AddComponent(["north_wall", "typical_wall", "left_window", "window_frame"], redGeometryComponent);
 
 ```
 
