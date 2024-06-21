@@ -134,7 +134,7 @@ class TSCodeGen
         }
         if (value.type === "relationship")
         {
-            return `Rel<${CleanupSchemaName(value.withClasses.name)}>`;
+            return `Rel<typeof ${CleanupSchemaName(value.withClasses.name)}>`;
         }
         if (value.type === "array")
         {
@@ -228,7 +228,7 @@ class TSCodeGen
         if (value.type === "relationship")
         {
             let className = CleanupSchemaName(value.withClasses.name);
-            this.code.EmitCode(`${outputName} = new Rel<${className}>(ECSID.FromString(${inputName}.ecsid));`);
+            this.code.EmitCode(`${outputName} = new Rel(${className}, ECSID.FromString(${inputName}.ecsid));`);
             return;
         }
         if (value.type === "array")

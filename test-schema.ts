@@ -11,7 +11,7 @@ let geom = new ifc_geometry_extrude_0();
     geom.contents = "contents";
     geom.indices = new ifc_profile_0();
     geom.indices.contents = "profile_contents";
-    geom.other = [new Rel<string>(ECSID.FromString("other.entity.id"))];
+    geom.other = [new Rel(ifc_profile_0, ECSID.FromString("sound_barrier.geom"))];
     geom.other2 = [new ifc_profile_0()];
     geom.other2[0].contents = "profile_contents_2";
     geom.str = "bla";
@@ -27,7 +27,7 @@ let overridden_geom = new ifc_geometry_extrude_0();
     overridden_geom.contents = "overridden_contents";
     overridden_geom.indices = new ifc_profile_0();
     overridden_geom.indices.contents = "profile_contents";
-    overridden_geom.other = [new Rel<string>(ECSID.FromString("other.entity.id"))];
+    overridden_geom.other = [new Rel(ifc_profile_0, ECSID.FromString("other.entity.id"))];
     overridden_geom.other2 = [new ifc_profile_0()];
     overridden_geom.other2[0].contents = "profile_contents_2";
     overridden_geom.str = "bla";
@@ -85,3 +85,5 @@ console.log(comps);
 let compIds = ecs.QueryComponentIdsByType(ifc_geometry_extrude_0);
 
 console.log(compIds.map((c) => c.ToString()));
+
+console.log(ecs.FollowRelation(geom.other[0]))

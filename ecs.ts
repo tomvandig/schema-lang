@@ -1,4 +1,4 @@
-import { ECSID, ComponentInstance } from "./sm_primitives";
+import { ECSID, ComponentInstance, Rel } from "./sm_primitives";
 
 export class Component 
 {
@@ -126,6 +126,11 @@ export class ECS
 
         //@ts-ignore // TODO
         return new type().FromJSON(component.AsJSON());
+    }
+
+    FollowRelation<T extends { new(): unknown; }>(rel: Rel<T>)
+    {
+        return this.GetAs(rel.type, rel.ecsid);
     }
 
     QueryComponentIdsByType<T>(type: { new(): T ;}): ECSID[]

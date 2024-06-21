@@ -53,9 +53,11 @@ export class ECSID
 
 export class Rel<T> {
     ecsid: ECSID;
+    type: T;
 
-    constructor(ecsid: ECSID)
+    constructor(t: T, ecsid: ECSID)
     {
+        this.type = t;
         this.ecsid = ecsid;
     }
 }
