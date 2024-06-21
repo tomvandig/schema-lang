@@ -54,3 +54,44 @@ ecs.AddComponent(["north_wall", "typical_wall", "left_window", "window_frame"], 
 This operation adds a component to an id prefix `north_wall.typical_wall.left_window.window_frame.geometry` which overrides the existing component present on `window_frame.geometry`.
 
 The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json`, to illustrate the working of the override, the file `hello_wall.geometrycolor.ifc5.json` is included which shows more clearly the ID prefixing and composition result for the geometry colors.
+
+`hello_wall.geometrycolor.ifc5.json`:
+```json
+{
+    "south_wall": {
+        "typical_wall": {
+            "color": "green",
+            "left_window": {
+                "color": "red",
+                "window_frame": {
+                    "color": "green"
+                }
+            },
+            "right_window": {
+                "color": "blue",
+                "window_frame": {
+                    "color": "green"
+                }
+            }
+        }
+    },
+    "north_wall": {
+        "typical_wall": {
+            "color": "green",
+            "left_window": {
+                "color": "red",
+                "window_frame": {
+                    "color": "red" <-- overridden value
+                }
+            },
+            "right_window": {
+                "color": "blue",
+                "window_frame": {
+                    "color": "green"
+                }
+            }
+        }
+    },
+    "space": {}
+}
+```
