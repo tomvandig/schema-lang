@@ -1,4 +1,4 @@
 /node_modules/
 out.js
-input/*.json
+schema/input/*.json
 model.ifc5.json
