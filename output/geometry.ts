@@ -1,5 +1,5 @@
 // generated code for input\geometry.ts
-import { Rel, ECSID, ComponentInstance } from "../sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance } from "../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"

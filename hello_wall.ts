@@ -1,9 +1,9 @@
-import { ECS } from "./ecs";
+import { ECS } from "./lib/ecs";
 import { ifc_space, ifc_wall, ifc_window, ifc_windowframe } from "./output/classifications";
 import { ifc_geometry } from "./output/geometry";
 import { ifc_spaceboundary } from "./output/spaceboundary";
 import { ifc_transform } from "./output/transform";
-import { ECSID, Rel } from "./sm_primitives";
+import { ECSID, Rel } from "./lib/sm_primitives";
 
 let ecs = new ECS();
 

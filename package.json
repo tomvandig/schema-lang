@@ -8,8 +8,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "esbuild define.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
-    "gen": "esbuild gen-code.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
+    "start": "esbuild lib/define.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
+    "gen": "esbuild lib/gen-code.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
     "hellowall": "esbuild hello_wall.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js"
   },
   "author": "",

@@ -345,7 +345,7 @@ function GenCodeForSchemaFile(schema: SchemaFile, classToFileMap: {})
 {
     let outputFileName = schema.originalFileName.replace(/.json/g, ".ts").replace("input", "output");
 
-    let mainInclude = "../sm_primitives.ts";
+    let mainInclude = "../lib/sm_primitives.ts";
 
     let codeGen = new TSCodeGen(mainInclude, classToFileMap);
     let code = codeGen.GenCodeForSchemaFile(schema);
