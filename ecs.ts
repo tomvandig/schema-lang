@@ -102,7 +102,7 @@ export class ECS
         this.children.get(parentECSID.ToString())?.push(ecsid.ToString());
     }
 
-    GetAs<T>(type: { new(): T ;}, ecsid: ECSID): T | undefined
+    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): T | undefined
     {
         let component = this.components.get(ecsid.ToString());
 
@@ -117,19 +117,18 @@ export class ECS
             return undefined;
         }
 
-        //@ts-ignore // TODO
+        //@ts-ignore // TODO: fix typing
         if (!component.ContainsAnyHashOfGroup(type.hashGroup))
         {
             return undefined;
         }
-        // TODO: check hash group
 
-        //@ts-ignore // TODO
         return new type().FromJSON(component.AsJSON());
     }
 
-    FollowRelation<T extends { new(): unknown; }>(rel: Rel<T>)
+    FollowRelation<T extends { new(): ComponentInstance; }>(rel: Rel<T>)
     {
+        // TODO: allow relative relationship IDs
         return this.GetAs(rel.type, rel.ecsid);
     }
 

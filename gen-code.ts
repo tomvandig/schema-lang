@@ -283,7 +283,7 @@ class TSCodeGen
         this.code.EmitCode(`];`);
         this.code.NewLine();
 
-        this.code.EmitCode(`GetComponentName() `, false);
+        this.code.EmitCode(`GetSchemaName() `, false);
         this.code.StartBlock();
         this.code.EmitCode(`return "${schema.name}"`);
         this.code.EndBlock();
