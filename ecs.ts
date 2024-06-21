@@ -168,7 +168,8 @@ export class ECS
     {
         let json = {
             tree: [] as any[],
-            components: [] as any[]
+            components: [] as any[],
+            schemas: [] as any[]
         };
 
         for (let [entity, children] of this.children) {
@@ -192,7 +193,9 @@ export class ECS
                 name: ecsid.GetLast(),
                 classes: exportedComponent
             })
-        } 
+        }
+
+        // TODO: schemas
         
         return json;
     }
