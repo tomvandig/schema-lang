@@ -1,5 +1,5 @@
-// generated code for input\classifications.ts
-import { Rel, ECSID, ComponentInstance } from "../lib/sm_primitives.ts"
+// generated code for schema\input\classifications.ts
+import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
 
 import { ifc_geometry } from "./geometry.ts"
 import { ifc_spaceboundary } from "./spaceboundary.ts"

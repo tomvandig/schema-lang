@@ -114,6 +114,7 @@ export class ECS
         }
 
         if (!component) {
+            // TODO: improve search to look at all compositions, not just the leaf
             return undefined;
         }
 

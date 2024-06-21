@@ -345,7 +345,8 @@ function GenCodeForSchemaFile(schema: SchemaFile, classToFileMap: {})
 {
     let outputFileName = schema.originalFileName.replace(/.json/g, ".ts").replace("input", "output");
 
-    let mainInclude = "../lib/sm_primitives.ts";
+    // TODO: fix paths
+    let mainInclude = "../../lib/sm_primitives.ts";
 
     let codeGen = new TSCodeGen(mainInclude, classToFileMap);
     let code = codeGen.GenCodeForSchemaFile(schema);
@@ -363,7 +364,7 @@ function GetClassToFileMapping(schemas: SchemaFile[])
     schemas.forEach((schema) => {
         GetClassNames(schema).forEach((classname) => {
             let filename = schema.originalFileName;
-            filename = filename.replace("input\\", "");
+            filename = filename.replace("schema\\input\\", "");
             filename = `./${filename}`;
             map[classname] = filename;
         })
@@ -392,4 +393,4 @@ function GenCodeForSchemaDir(dir: string)
         GenCodeForSchemaFile(schema, mapping);
     })
 }
-GenCodeForSchemaDir("input");
+GenCodeForSchemaDir("schema/input");

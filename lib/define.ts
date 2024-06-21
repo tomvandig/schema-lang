@@ -178,4 +178,4 @@ function ConvertSchemaTSInDir(dir: string)
     })
 }
 
-ConvertSchemaTSInDir('./input');
+ConvertSchemaTSInDir('./schema/input');

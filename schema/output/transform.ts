@@ -1,5 +1,5 @@
-// generated code for input\transform.ts
-import { Rel, ECSID, ComponentInstance } from "../lib/sm_primitives.ts"
+// generated code for schema\input\transform.ts
+import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
