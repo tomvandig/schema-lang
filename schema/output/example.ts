@@ -1,5 +1,5 @@
 // generated code for schema\input\example.ts
-import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
@@ -104,7 +104,7 @@ export class example_childobject  implements ComponentInstance
 			__export[__hash].childValue = this.childValue;
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new example_childobject()
 		// example::parentobject
 		// 4977798611a94ed0eb60c64dbd3b2d82a5941200287af78477512f7f84975722
@@ -170,6 +170,9 @@ export class example_childobject  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(example_childobject.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -340,7 +343,7 @@ export class example_otherobject  implements ComponentInstance
 			__export[__hash] = { name: "example::otherobject"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new example_otherobject()
 		// example::otherobject
 		// c89840dbc86c0762101eb3437011ffe5f816cd9a59e8924365ce62f61fc0f78b
@@ -350,6 +353,9 @@ export class example_otherobject  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(example_otherobject.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -445,7 +451,7 @@ export class example_parentobject  implements ComponentInstance
 			);
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new example_parentobject()
 		// example::parentobject
 		// 4977798611a94ed0eb60c64dbd3b2d82a5941200287af78477512f7f84975722
@@ -503,6 +509,9 @@ export class example_parentobject  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(example_parentobject.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {

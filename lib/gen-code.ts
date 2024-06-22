@@ -302,13 +302,20 @@ class TSCodeGen
         this.code.EndBlock();
 
         
-        this.code.EmitCode(`FromJSON(__import)`, false)
+        this.code.EmitCode(`FromJSON(__import: any)`, false)
         this.code.StartBlock();
         this.code.EmitCode(`let instance = this;//new ${CleanupSchemaName(schema.name)}()`)
         schema.classes.forEach((schemaClass) => {
             this.GenImportCodeForClass(schemaClass);
         })
         this.code.EmitCode(`return instance;`)
+        this.code.EndBlock();
+        
+
+        this.code.EmitCode(`static ValidateJSON(__import: any)`, false)
+        this.code.StartBlock();
+        // TODO: fix typing
+        this.code.EmitCode(`ValidateObjectWithSchema(${CleanupSchemaName(schema.name)}.schemaJSON as any, __import);`);
         this.code.EndBlock();
 
         this.code.NewLine();
@@ -322,7 +329,7 @@ class TSCodeGen
         this.code = new CodeFormat();
 
         this.code.EmitCode(`// generated code for ${schemaFile.originalFileName}`);
-        this.code.EmitCode(`import { Rel, ECSID, ComponentInstance } from "${this.mainInclude}"`);
+        this.code.EmitCode(`import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "${this.mainInclude}"`);
         this.code.NewLine();
 
         // TODO: scan for relevant

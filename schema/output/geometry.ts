@@ -1,5 +1,5 @@
 // generated code for schema\input\geometry.ts
-import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
@@ -52,7 +52,7 @@ export class ifc_geometry  implements ComponentInstance
 			__export[__hash].color = this.color;
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_geometry()
 		// ifc::geometry
 		// d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5
@@ -77,6 +77,9 @@ export class ifc_geometry  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_geometry.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {

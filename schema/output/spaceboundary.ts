@@ -1,5 +1,5 @@
 // generated code for schema\input\spaceboundary.ts
-import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
@@ -42,7 +42,7 @@ export class ifc_spaceboundary  implements ComponentInstance
 			__export[__hash].InternalOrExternalBoundary = this.InternalOrExternalBoundary;
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_spaceboundary()
 		// ifc::spaceboundary
 		// d3914454212f0693140f2a7bb662de1e64617a1c7a8d2d62ae08342fdf8e0d31
@@ -56,6 +56,9 @@ export class ifc_spaceboundary  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_spaceboundary.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {

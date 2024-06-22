@@ -1,5 +1,5 @@
 // generated code for schema\input\classifications.ts
-import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
 
 import { example_childobject } from "./example.ts"
 import { example_otherobject } from "./example.ts"
@@ -36,7 +36,7 @@ export class ifc_buildingelement  implements ComponentInstance
 			__export[__hash] = { name: "ifc::buildingelement"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_buildingelement()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -53,6 +53,9 @@ export class ifc_buildingelement  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_buildingelement.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -91,7 +94,7 @@ export class ifc_classification  implements ComponentInstance
 			__export[__hash] = { name: "ifc::classification"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_classification()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -101,6 +104,9 @@ export class ifc_classification  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_classification.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -142,7 +148,7 @@ export class ifc_glazing  implements ComponentInstance
 			__export[__hash] = { name: "ifc::glazing"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_glazing()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -159,6 +165,9 @@ export class ifc_glazing  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_glazing.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -205,7 +214,7 @@ export class ifc_space  implements ComponentInstance
 			__export[__hash] = { name: "ifc::space"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_space()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -222,6 +231,9 @@ export class ifc_space  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_space.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -276,7 +288,7 @@ export class ifc_wall  implements ComponentInstance
 			__export[__hash] = { name: "ifc::wall"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_wall()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -300,6 +312,9 @@ export class ifc_wall  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_wall.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -359,7 +374,7 @@ export class ifc_window  implements ComponentInstance
 			__export[__hash] = { name: "ifc::window"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_window()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -383,6 +398,9 @@ export class ifc_window  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_window.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
@@ -434,7 +452,7 @@ export class ifc_windowframe  implements ComponentInstance
 			__export[__hash] = { name: "ifc::windowframe"}
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_windowframe()
 		// ifc::classification
 		// 8778ea91bc6bff390d377abe3d25eef7e223e50f2e8af45a8efaacb2aeb16c81
@@ -451,6 +469,9 @@ export class ifc_windowframe  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_windowframe.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {

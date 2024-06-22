@@ -1,5 +1,5 @@
 // generated code for schema\input\transform.ts
-import { Rel, ECSID, ComponentInstance } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
@@ -40,7 +40,7 @@ export class ifc_transform  implements ComponentInstance
 			__export[__hash].z = this.z;
 		}
 	}
-	FromJSON(__import){
+	FromJSON(__import: any){
 		let instance = this;//new ifc_transform()
 		// ifc::transform
 		// 7bfc250753ed2c8c626a7972c37cb11c0f6c3b5ee0a16be19aff76a7fde3b83f
@@ -53,6 +53,9 @@ export class ifc_transform  implements ComponentInstance
 			}
 		}
 		return instance;
+	}
+	static ValidateJSON(__import: any){
+		ValidateObjectWithSchema(ifc_transform.schemaJSON as any, __import);
 	}
 	
 	static schemaJSON = {
