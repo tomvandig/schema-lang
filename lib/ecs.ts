@@ -1,5 +1,5 @@
-import { Schema } from "./schema-def";
-import { ECSID, ComponentInstance, Rel } from "./sm_primitives";
+import { Schema, SchemaClass } from "./schema-def";
+import { ECSID, ComponentInstance, Rel, ValidateObjectWithHashes } from "./sm_primitives";
 
 export class Component 
 {
@@ -59,6 +59,7 @@ export class ECS
     children: Map<string, string[]>;
     components: Map<string, Component>;
     schemas: Map<string, Schema>;
+    schemaClasses: Map<string, SchemaClass>;
 
     constructor()
     {
@@ -66,12 +67,26 @@ export class ECS
         this.children = new Map();
         this.components = new Map();
         this.schemas = new Map();
+        this.schemaClasses = new Map();
     }
 
-    RegisterSchema(schema: any)
+    RegisterSchema(schema: Schema)
     {
-        let schemaObject = schema.schemaJSON as Schema;
-        this.schemas.set(schemaObject.name, schemaObject);
+        this.schemas.set(schema.name, schema);
+        
+        schema.classes.forEach((cl) => {
+            this.schemaClasses.set(cl.hash, cl);
+        })
+    }
+
+    GetSchemaForHash(hash: string)
+    {
+        if (!this.schemaClasses.has(hash))
+        {
+            return undefined;
+        }
+
+        return this.schemaClasses.get(hash)!;
     }
 
     AddComponent(ecsid: ECSID, componentName: string, component: ComponentInstance)
@@ -247,6 +262,11 @@ export class ECS
     {
         let ecs = new ECS();
 
+        // first load schemas so the components can be validated
+        json.schemas.forEach((schema) => {
+            ecs.RegisterSchema(schema);
+        });
+
         json.tree.forEach((item) => {
             let parent = ECSID.FromString(item.id);
             item.children.forEach((child) => {
@@ -258,11 +278,9 @@ export class ECS
             let id = ECSID.FromString(component.id);
             let name = component.name;
             let classes = component.classes;
-            ecs.AddClasses(id, name, classes);
-        });
 
-        json.schemas.forEach((schema) => {
-            ecs.RegisterSchema(schema);
+            ValidateObjectWithHashes(ecs.GetSchemaForHash.bind(ecs), classes);
+            ecs.AddClasses(id, name, classes);
         });
 
         return ecs;

@@ -82,14 +82,17 @@ function ValidateValue(library: SchemaLibrary, name: string, value: SchemaClassV
         if (value === "f32") 
         {
             assert(typeof obj === "number", `Expected number for number value ${name}`);
+            return;
         }
         if (value === "i32") 
         {
             assert(typeof obj === "number", `Expected number for number value ${name}`);
+            return;
         }
         if (value === "string")
         {
             assert(typeof obj === "string", `Expected string for string value ${name}`);
+            return;
         } 
         assert(false, `Unknown primitive type ${value}`);
         return;

@@ -5,12 +5,13 @@ import { ifc_spaceboundary } from "./schema/output/spaceboundary";
 import { ifc_transform } from "./schema/output/transform";
 import { ECSID, Rel } from "./lib/sm_primitives";
 import { Register } from "./schema/output";
+import { Schema } from "./lib/schema-def";
 
 let ecs = new ECS();
 
 // register all schemas
 Register((schema: any) => {
-    ecs.RegisterSchema(schema);
+    ecs.RegisterSchema(schema.schemaJSON as Schema);
 });
 
 // declare some helpers
