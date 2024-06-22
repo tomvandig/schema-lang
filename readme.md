@@ -95,3 +95,7 @@ The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json` but is 
     "space": {}
 }
 ```
+
+# Validation
+
+A schema is transformed from `typescript` into JSON, the json representation is included in the generated code as `static schemaJSON` and registered with the ECS upon loading. The ECS can use the schema to validate any incoming components. The file `test_validate.ts` shows an example where all components inside `hello_wall.ifc5.json` are validated using the schemas defined in the file itself, this can be tested by running the script after tampering with the file.
