@@ -279,7 +279,13 @@ export class ECS
             let name = component.name;
             let classes = component.classes;
 
-            ValidateObjectWithHashes(ecs.GetSchemaForHash.bind(ecs), classes);
+            try {
+                ValidateObjectWithHashes(ecs.GetSchemaForHash.bind(ecs), classes);
+            } catch(e)
+            {
+                console.error(`Error validating component ${component.id}.${component.name}:`);
+                throw e;
+            }
             ecs.AddClasses(id, name, classes);
         });
 
