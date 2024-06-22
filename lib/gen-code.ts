@@ -312,10 +312,10 @@ class TSCodeGen
         this.code.EndBlock();
         
 
-        this.code.EmitCode(`static ValidateJSON(__import: any)`, false)
+        this.code.EmitCode(`static ValidateJSON(library: SchemaLibrary, __import: any)`, false)
         this.code.StartBlock();
         // TODO: fix typing
-        this.code.EmitCode(`ValidateObjectWithSchema(${CleanupSchemaName(schema.name)}.schemaJSON as any, __import);`);
+        this.code.EmitCode(`ValidateObjectWithHashes(library, __import);`);
         this.code.EndBlock();
 
         this.code.NewLine();
@@ -329,7 +329,7 @@ class TSCodeGen
         this.code = new CodeFormat();
 
         this.code.EmitCode(`// generated code for ${schemaFile.originalFileName}`);
-        this.code.EmitCode(`import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "${this.mainInclude}"`);
+        this.code.EmitCode(`import { Rel, ECSID, ComponentInstance, ValidateObjectWithHashes, SchemaLibrary } from "${this.mainInclude}"`);
         this.code.NewLine();
 
         // TODO: scan for relevant

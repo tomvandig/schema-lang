@@ -1,5 +1,5 @@
 // generated code for schema\input\classifications.ts
-import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithHashes, SchemaLibrary } from "../../lib/sm_primitives.ts"
 
 import { example_childobject } from "./example.ts"
 import { example_otherobject } from "./example.ts"
@@ -54,8 +54,8 @@ export class ifc_buildingelement  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_buildingelement.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -105,8 +105,8 @@ export class ifc_classification  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_classification.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -166,8 +166,8 @@ export class ifc_glazing  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_glazing.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -232,8 +232,8 @@ export class ifc_space  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_space.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -313,8 +313,8 @@ export class ifc_wall  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_wall.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -399,8 +399,8 @@ export class ifc_window  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_window.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -470,8 +470,8 @@ export class ifc_windowframe  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_windowframe.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {

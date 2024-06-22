@@ -1,5 +1,5 @@
 // generated code for schema\input\spaceboundary.ts
-import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithHashes, SchemaLibrary } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
@@ -57,8 +57,8 @@ export class ifc_spaceboundary  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(ifc_spaceboundary.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {

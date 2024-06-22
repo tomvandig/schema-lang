@@ -1,5 +1,5 @@
 // generated code for schema\input\example.ts
-import { Rel, ECSID, ComponentInstance, ValidateObjectWithSchema } from "../../lib/sm_primitives.ts"
+import { Rel, ECSID, ComponentInstance, ValidateObjectWithHashes, SchemaLibrary } from "../../lib/sm_primitives.ts"
 
 import { ifc_buildingelement } from "./classifications.ts"
 import { ifc_classification } from "./classifications.ts"
@@ -171,8 +171,8 @@ export class example_childobject  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(example_childobject.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -354,8 +354,8 @@ export class example_otherobject  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(example_otherobject.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {
@@ -510,8 +510,8 @@ export class example_parentobject  implements ComponentInstance
 		}
 		return instance;
 	}
-	static ValidateJSON(__import: any){
-		ValidateObjectWithSchema(example_parentobject.schemaJSON as any, __import);
+	static ValidateJSON(library: SchemaLibrary, __import: any){
+		ValidateObjectWithHashes(library, __import);
 	}
 	
 	static schemaJSON = {

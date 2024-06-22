@@ -1,4 +1,4 @@
-import { Schema, SchemaClassValue } from "./schema-def";
+import { Schema, SchemaClass, SchemaClassValue } from "./schema-def";
 
 const ECSID_DELIM = ".";
 
@@ -73,7 +73,9 @@ function assert(boolval: boolean, problem: string)
     }
 }
 
-function ValidateValue(name: string, value: SchemaClassValue, obj: any)
+export type SchemaLibrary = (string)=>undefined|SchemaClass;
+
+function ValidateValue(library: SchemaLibrary, name: string, value: SchemaClassValue, obj: any)
 {
     if (typeof value === "string")
     {
@@ -103,6 +105,7 @@ function ValidateValue(name: string, value: SchemaClassValue, obj: any)
         assert(typeof obj === "object", `Expected object for composition value ${name}`);
 
         // TODO: recurse
+        ValidateObjectWithHashes(library, obj.classes);
 
         return;
     }
@@ -118,7 +121,7 @@ function ValidateValue(name: string, value: SchemaClassValue, obj: any)
         assert(Array.isArray(obj), `Expected array for array value ${name}`);
 
         obj.forEach((entry) => {
-            ValidateValue(name, value.arrayType, entry);
+            ValidateValue(library, name, value.arrayType, entry);
         })
 
         return;
@@ -127,19 +130,26 @@ function ValidateValue(name: string, value: SchemaClassValue, obj: any)
     throw new Error(`Unknown type ${value}`);
 }
 
-export function ValidateObjectWithSchema(schema: Schema, object: any)
+function ValidateClass(library: SchemaLibrary, schemaClass: SchemaClass, obj: any)
 {
-    schema.classes.forEach((schemaClass) => {
-        let h = schemaClass.hash;
-        let objClass = object[h];
+    schemaClass.values.forEach((value) => {
+        let objValue = obj[value.name];
 
-        if (objClass)
+        ValidateValue(library, value.name, value.type, objValue);
+    })   
+}
+
+export function ValidateObjectWithHashes(library: SchemaLibrary, obj: any)
+{
+    Object.keys(obj).forEach((hash) => {
+        let schema = library(hash);
+        if (schema)
         {
-            schemaClass.values.forEach((value) => {
-                let objValue = objClass[value.name];
-
-                ValidateValue(value.name, value.type, objValue);
-            })    
+            ValidateClass(library, schema, obj[hash]);   
         }
-    })
+        else
+        {
+            assert(false, `Unknown schema hash ${hash}`);
+        }
+    });
 }
