@@ -50,11 +50,11 @@ let typical_wall = new ECSID(["typical_wall"]);
     AddTransform(window_frame, 1, 1, 1);
     AddGeom(window_frame, "green");
 
-    ecs.AddParent(left_window, typical_wall);
-    ecs.AddParent(right_window, typical_wall);
+    ecs.Link(typical_wall, "left_window", left_window);
+    ecs.Link(typical_wall, "right_window", right_window);
 
-    ecs.AddParent(window_frame, right_window);
-    ecs.AddParent(window_frame, left_window);
+    ecs.Link(right_window, "frame", window_frame);
+    ecs.Link(left_window, "frame", window_frame);
 
     AddGeom(typical_wall, "green");
 }
@@ -72,17 +72,15 @@ ecs.AddComponent(space, "classification", new ifc_space());
     AddTransform(space, 5, 0, 0);
 
 
-    ecs.AddParent(typical_wall, south_wall);
-    ecs.AddParent(typical_wall, north_wall);
+    ecs.Link(new ECSID([]), "south_wall", typical_wall);
+    ecs.Link(new ECSID([]), "north_wall", typical_wall);
 
     // roots
-    ecs.AddParent(south_wall, new ECSID([]));
-    ecs.AddParent(north_wall, new ECSID([]));
-    ecs.AddParent(space, new ECSID([]));
+    ecs.Link(new ECSID([]), "space", space);
 }
 
 // override northwall, left window, frame from green to red
-AddGeom(north_wall.PushOther(typical_wall).Push("left_window").Push("window_frame"), "red");
+AddGeom(north_wall.Push("left_window").Push("frame"), "red");
 
 // construct relationships
 {

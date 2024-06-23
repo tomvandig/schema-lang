@@ -53,17 +53,21 @@ export class Component
     }
 }
 
+export class Link
+{
+    name: string;
+    reference: string;
+}
+
 export class ECS
 {
-    parents: Map<string, string[]>;
-    children: Map<string, string[]>;
+    children: Map<string, Link[]>;
     components: Map<string, Component>;
     schemas: Map<string, Schema>;
     schemaClasses: Map<string, SchemaClass>;
 
     constructor()
     {
-        this.parents = new Map();
         this.children = new Map();
         this.components = new Map();
         this.schemas = new Map();
@@ -111,37 +115,18 @@ export class ECS
         this.components.set(ecsid.Push(componentName).ToString(), comp);
     }
 
-    AddParent(ecsid: ECSID, parentECSID: ECSID)
+    Link(parentECSID: ECSID, name: string, ecsid: ECSID, )
     {
-        if (!this.parents.get(ecsid.ToString()))
-        {
-            this.parents.set(ecsid.ToString(), []);
-        }
         if (!this.children.get(parentECSID.ToString()))
         {
             this.children.set(parentECSID.ToString(), []);
         }
 
-        this.parents.get(ecsid.ToString())?.push(parentECSID.ToString());
-        this.children.get(parentECSID.ToString())?.push(ecsid.ToString());
+        this.children.get(parentECSID.ToString())?.push({name, reference: ecsid.ToString()});
     }
 
-    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): T | undefined
+    ConvertToConcreteComponent<T extends ComponentInstance>(type: { new(): T ;}, component: Component)
     {
-        let component = this.components.get(ecsid.ToString());
-
-        if (!component)
-        {
-            let componentName = ecsid.GetLast();
-            let entityName = ecsid.Pop().GetLast();
-            component = this.components.get(new ECSID([entityName, componentName]).ToString());
-        }
-
-        if (!component) {
-            // TODO: improve search to look at all compositions, not just the leaf
-            return undefined;
-        }
-
         //@ts-ignore // TODO: fix typing
         if (!component.ContainsAnyHashOfGroup(type.hashGroup))
         {
@@ -149,6 +134,59 @@ export class ECS
         }
 
         return new type().FromJSON(component.AsJSON());
+    }
+
+    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): T | undefined
+    {
+        if (ecsid.IsRoot())
+        {
+            return undefined;
+        }
+
+        // A.B.C.component: check for fully qualified component id, this gets precedence
+        let component = this.components.get(ecsid.Push(componentName).ToString());
+
+        if (component)
+        {
+            return this.ConvertToConcreteComponent(type, component);
+        }
+        else if (!ecsid.IsLeaf())
+        {
+            // if fully qualified is not found, check up to leaf
+            // B.C.component
+            // C.component
+            
+            let sub = ecsid.Shift(); // B.C
+            let component = this.GetComponentAs(type, sub, componentName);
+            if (component)
+            {
+                return component;
+            }
+            else
+            {
+                // B might be a reference
+                let linkName = sub.GetFirst();
+                let children = this.children.get(ecsid.GetFirst());
+                let links = children?.filter((value) => value.name === linkName);
+                if (links && links.length === 1)
+                {
+                    return this.GetComponentAs(type, sub.ReplaceFirst(links[0].reference), componentName);
+                }
+                return undefined;
+            }
+        }
+        else
+        {
+            return undefined;
+        }
+    }
+
+    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): T | undefined
+    {
+        let id = ecsid.Pop();
+        let componentName = ecsid.GetLast();
+
+        return this.GetComponentAs(type, id, componentName);
     }
 
     FollowRelation<T extends { new(): ComponentInstance; }>(rel: Rel<T>)
@@ -243,8 +281,8 @@ export class ECS
         if (children)
         {
             children?.forEach((child) => {
-                output[child] = {};
-                this.FlattenToJSONRecursive(type, child, nodeID.Push(child), output[child]);
+                output[child.name] = {};
+                this.FlattenToJSONRecursive(type, child.reference, nodeID.Push(child.name), output[child.name]);
             });
         }
     }
@@ -270,7 +308,9 @@ export class ECS
         json.tree.forEach((item) => {
             let parent = ECSID.FromString(item.id);
             item.children.forEach((child) => {
-                ecs.AddParent(ECSID.FromString(child), parent);
+                let name = child.name;
+                let reference = child.reference;
+                ecs.Link(parent, name, ECSID.FromString(reference));
             })
         });
 

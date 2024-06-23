@@ -3,40 +3,49 @@
         {
             "id": "typical_wall",
             "children": [
-                "left_window",
-                "right_window"
+                {
+                    "name": "left_window",
+                    "reference": "left_window"
+                },
+                {
+                    "name": "right_window",
+                    "reference": "right_window"
+                }
             ]
         },
         {
             "id": "right_window",
             "children": [
-                "window_frame"
+                {
+                    "name": "frame",
+                    "reference": "window_frame"
+                }
             ]
         },
         {
             "id": "left_window",
             "children": [
-                "window_frame"
-            ]
-        },
-        {
-            "id": "south_wall",
-            "children": [
-                "typical_wall"
-            ]
-        },
-        {
-            "id": "north_wall",
-            "children": [
-                "typical_wall"
+                {
+                    "name": "frame",
+                    "reference": "window_frame"
+                }
             ]
         },
         {
             "id": "",
             "children": [
-                "south_wall",
-                "north_wall",
-                "space"
+                {
+                    "name": "south_wall",
+                    "reference": "typical_wall"
+                },
+                {
+                    "name": "north_wall",
+                    "reference": "typical_wall"
+                },
+                {
+                    "name": "space",
+                    "reference": "space"
+                }
             ]
         }
     ],
@@ -246,7 +255,7 @@
             }
         },
         {
-            "id": "north_wall.typical_wall.left_window.window_frame",
+            "id": "north_wall.left_window.frame",
             "name": "geometry",
             "classes": {
                 "d89484cf28772e03ab074e698121ee782c79096feba53171232fe248150da4b5": {

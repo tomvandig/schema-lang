@@ -38,9 +38,26 @@ export class ECSID
         return new ECSID([...this.parts.slice(0, -1)])
     }
 
+    Shift()
+    {
+        return new ECSID([...this.parts.slice(1)])
+    }
+
     GetLast()
     {
         return this.parts[this.parts.length - 1];
+    }
+
+    GetFirst()
+    {
+        return this.parts[0];
+    }
+
+    ReplaceFirst(newFirst: string)
+    {
+        let n = new ECSID(this.parts);
+        n.parts[0] = newFirst;
+        return n;
     }
 
     ToString()
@@ -51,6 +68,11 @@ export class ECSID
     IsRoot()
     {
         return this.parts.length === 0;
+    }
+
+    IsLeaf()
+    {
+        return this.parts.length === 1;
     }
 }
 
