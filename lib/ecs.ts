@@ -170,13 +170,29 @@ export class ECS
                 let links = children?.filter((value) => value.name === linkName);
                 if (links && links.length === 1)
                 {
-                    return this.GetComponentAs(type, sub.ReplaceFirst(links[0].reference), componentName);
+                    if (links[0].reference != links[0].name)
+                    {
+                        return this.GetComponentAs(type, sub.ReplaceFirst(links[0].reference), componentName);
+                    }
                 }
                 return undefined;
             }
         }
         else
         {
+            // if I am a leaf, but did not have a component
+            // could still be a rooted renamed entity
+            // TODO: duplicate code with above
+            let linkName = ecsid.GetFirst();
+            let children = this.children.get("");
+            let links = children?.filter((value) => value.name === linkName);
+            if (links && links.length === 1)
+            {
+                if (links[0].reference != links[0].name)
+                {
+                    return this.GetComponentAs(type, new ECSID([links[0].reference]), componentName);
+                }
+            }
             return undefined;
         }
     }

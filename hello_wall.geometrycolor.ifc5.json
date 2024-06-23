@@ -1,5 +1,6 @@
 {
     "south_wall": {
+        "color": "green",
         "left_window": {
             "color": "red",
             "frame": {
@@ -14,6 +15,7 @@
         }
     },
     "north_wall": {
+        "color": "green",
         "left_window": {
             "color": "red",
             "frame": {
