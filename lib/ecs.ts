@@ -281,6 +281,11 @@ export class ECS
         return json;
     }
 
+    GetChildren(id: string)
+    {
+        return this.children.get(id);
+    }
+
     FlattenToJSONRecursive(type: {new(): ComponentInstance}, node: string, nodeID: ECSID, output: any)
     {
         // component
@@ -292,7 +297,7 @@ export class ECS
             output.color = component.color;
         }
 
-        let children = this.children.get(node);
+        let children = this.GetChildren(node);
 
         if (children)
         {
