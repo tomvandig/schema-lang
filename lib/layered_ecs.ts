@@ -6,6 +6,11 @@ interface LayerLink {
     layers: string[];        
 }
 
+interface LayerComponent<T extends ComponentInstance> {
+    component: T;
+    layers: string[];        
+}
+
 interface Layer
 {
     ecs: ECS;
@@ -68,14 +73,41 @@ class LayeredECS
         return composedChildren.values();
     }
 
-    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): T | undefined
+    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): LayerComponent<T>[] | undefined
     {
-        return undefined;
+        let composedComponents: LayerComponent<T>[] = [];
+
+        this.layers.forEach((layer) => {
+            let component = layer.ecs.GetComponentAs(type, ecsid, componentName);
+
+            if (component)
+            {
+                let found = false;
+                composedComponents.forEach((composedComponent) => {
+                    // TODO: should probably do a value hash here
+                    // check if equal, set found=true, append layer
+                })
+
+                if (!found)
+                {
+                    composedComponents.push({
+                        component,
+                        layers: [layer.name]
+                    });   
+                }
+            }
+        })
+
+
+        return composedComponents;
     }
 
-    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): T | undefined
+    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): LayerComponent<T>[] | undefined
     {
-        return undefined;
+        let id = ecsid.Pop();
+        let componentName = ecsid.GetLast();
+
+        return this.GetComponentAs(type, id, componentName);
     }
     
     FollowRelation<T extends { new(): ComponentInstance; }>(rel: Rel<T>)
