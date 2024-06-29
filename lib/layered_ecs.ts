@@ -86,6 +86,8 @@ class LayeredECS
                 composedComponents.forEach((composedComponent) => {
                     // TODO: should probably do a value hash here
                     // check if equal, set found=true, append layer
+                    // this is incorrect, need to merge all classes of the component and resolve duplicates
+                    // --> need LayerClass, not LayerComponent
                 })
 
                 if (!found)
@@ -112,7 +114,6 @@ class LayeredECS
     
     FollowRelation<T extends { new(): ComponentInstance; }>(rel: Rel<T>)
     {
-        // TODO: allow relative relationship IDs
         return this.GetAs(rel.type, rel.ecsid);
     }
 
