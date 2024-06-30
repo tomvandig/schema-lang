@@ -51,6 +51,17 @@ export class Component
         
         return classes;
     }
+
+    ConvertToConcreteComponent<T extends ComponentInstance>(type: { new(): T ;})
+    {
+        //@ts-ignore // TODO: fix typing
+        if (!this.ContainsAnyHashOfGroup(type.hashGroup))
+        {
+            return undefined;
+        }
+
+        return new type().FromJSON(this.AsJSON());
+    }
 }
 
 export class Link
@@ -125,76 +136,71 @@ export class ECS
         this.children.get(parentECSID.ToString())?.push({name, reference: ecsid.ToString()});
     }
 
-    ConvertToConcreteComponent<T extends ComponentInstance>(type: { new(): T ;}, component: Component)
-    {
-        //@ts-ignore // TODO: fix typing
-        if (!component.ContainsAnyHashOfGroup(type.hashGroup))
-        {
-            return undefined;
-        }
-
-        return new type().FromJSON(component.AsJSON());
-    }
-
-    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): T | undefined
+    GetComponent(ecsid: ECSID, componentName: string) : Component | undefined
     {
         if (ecsid.IsRoot())
-        {
-            return undefined;
-        }
-
-        // A.B.C.component: check for fully qualified component id, this gets precedence
-        let component = this.components.get(ecsid.Push(componentName).ToString());
-
-        if (component)
-        {
-            return this.ConvertToConcreteComponent(type, component);
-        }
-        else if (!ecsid.IsLeaf())
-        {
-            // if fully qualified is not found, check up to leaf
-            // B.C.component
-            // C.component
-            
-            let sub = ecsid.Shift(); // B.C
-            let component = this.GetComponentAs(type, sub, componentName);
+            {
+                return undefined;
+            }
+    
+            // A.B.C.component: check for fully qualified component id, this gets precedence
+            let component = this.components.get(ecsid.Push(componentName).ToString());
+    
             if (component)
             {
                 return component;
             }
+            else if (!ecsid.IsLeaf())
+            {
+                // if fully qualified is not found, check up to leaf
+                // B.C.component
+                // C.component
+                
+                let sub = ecsid.Shift(); // B.C
+                let component = this.GetComponent(sub, componentName);
+                if (component)
+                {
+                    return component;
+                }
+                else
+                {
+                    // B might be a reference
+                    let linkName = sub.GetFirst();
+                    let children = this.children.get(ecsid.GetFirst());
+                    let links = children?.filter((value) => value.name === linkName);
+                    if (links && links.length === 1)
+                    {
+                        if (links[0].reference != links[0].name)
+                        {
+                            return this.GetComponent(sub.ReplaceFirst(links[0].reference), componentName);
+                        }
+                    }
+                    return undefined;
+                }
+            }
             else
             {
-                // B might be a reference
-                let linkName = sub.GetFirst();
-                let children = this.children.get(ecsid.GetFirst());
+                // if I am a leaf, but did not have a component
+                // could still be a rooted renamed entity
+                // TODO: duplicate code with above
+                let linkName = ecsid.GetFirst();
+                let children = this.children.get("");
                 let links = children?.filter((value) => value.name === linkName);
                 if (links && links.length === 1)
                 {
                     if (links[0].reference != links[0].name)
                     {
-                        return this.GetComponentAs(type, sub.ReplaceFirst(links[0].reference), componentName);
+                        return this.GetComponent(new ECSID([links[0].reference]), componentName);
                     }
                 }
                 return undefined;
             }
-        }
-        else
-        {
-            // if I am a leaf, but did not have a component
-            // could still be a rooted renamed entity
-            // TODO: duplicate code with above
-            let linkName = ecsid.GetFirst();
-            let children = this.children.get("");
-            let links = children?.filter((value) => value.name === linkName);
-            if (links && links.length === 1)
-            {
-                if (links[0].reference != links[0].name)
-                {
-                    return this.GetComponentAs(type, new ECSID([links[0].reference]), componentName);
-                }
-            }
-            return undefined;
-        }
+    }
+
+    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): T | undefined
+    {
+        let component = this.GetComponent(ecsid, componentName);
+        return component?.ConvertToConcreteComponent(type);
     }
 
     GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): T | undefined

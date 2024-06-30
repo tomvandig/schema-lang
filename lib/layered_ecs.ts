@@ -1,4 +1,4 @@
-import { ECS, Link } from "./ecs";
+import { Component, ECS, Link } from "./ecs";
 import { ComponentInstance, ECSID, Rel } from "./sm_primitives";
 
 interface LayerLink {
@@ -6,9 +6,14 @@ interface LayerLink {
     layers: string[];        
 }
 
-interface LayerComponent<T extends ComponentInstance> {
-    component: T;
-    layers: string[];        
+interface LayerClass
+{
+    classData: any;
+    layers: string[];
+}
+
+interface LayerClasses {
+    classLayersByHash: Map<string, LayerClass[]>;
 }
 
 interface Layer
@@ -27,7 +32,7 @@ class LayeredECS
         this.layers = layers;
     }
 
-    GetChildren(id: string)
+    GetLayeredChildren(id: string)
     {
         let composedChildren: Map<string, LayerLink[]> = new Map();
 
@@ -36,6 +41,7 @@ class LayeredECS
 
             if (layerChildren)
             {
+                // TODO: simplify to keeping last layer only
                 // this layer has children for the requested id
                 layerChildren.forEach((layerChild) => {
                     let found = false;
@@ -73,35 +79,82 @@ class LayeredECS
         return composedChildren.values();
     }
 
-    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): LayerComponent<T>[] | undefined
+    GetChildren(id: string)
     {
-        let composedComponents: LayerComponent<T>[] = [];
+        let layeredChildren = this.GetLayeredChildren(id);
+
+        if (!layeredChildren) return undefined;
+
+        let children: Link[] = [];
+        for (let child of layeredChildren)
+        {
+            let lastLayer = child[child.length - 1];
+            children.push(lastLayer.link);
+        }
+
+        return children;
+    }
+
+    GetLayeredComponent(ecsid: ECSID, componentName: string)
+    {
+        let layerClasses: LayerClasses = {
+            classLayersByHash: new Map()
+        };
 
         this.layers.forEach((layer) => {
-            let component = layer.ecs.GetComponentAs(type, ecsid, componentName);
+            let component = layer.ecs.GetComponent(ecsid, componentName);
 
             if (component)
             {
-                let found = false;
-                composedComponents.forEach((composedComponent) => {
-                    // TODO: should probably do a value hash here
-                    // check if equal, set found=true, append layer
-                    // this is incorrect, need to merge all classes of the component and resolve duplicates
-                    // --> need LayerClass, not LayerComponent
-                })
-
-                if (!found)
+                // this layer has a component for this ID/name
+                // check if we already have a match
+                for (let [hash, classObj] of component.classesByHash)
                 {
-                    composedComponents.push({
-                        component,
-                        layers: [layer.name]
-                    });   
+                    if (!layerClasses.classLayersByHash.has(hash))
+                    {
+                        layerClasses.classLayersByHash.set(hash, [{
+                            classData: classObj,
+                            layers: []
+                        }]);
+                    }
+
+                    let layerObj = layerClasses.classLayersByHash.get(hash);
+                    let lastLayer = layerObj![layerObj!.length - 1];
+
+                    // TODO: fix equal check
+                    if (lastLayer.classData === classObj)
+                    {
+                        // contribute to layer
+                        lastLayer.layers.push(layer.name); // append
+                    }
+                    else
+                    {
+                        // add layer
+                        layerObj!.push({
+                            classData: classObj,
+                            layers: [layer.name]
+                        });
+                    }
                 }
             }
         })
 
+        return layerClasses;
+    }
 
-        return composedComponents;
+    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): LayerComponent<T>[] | undefined
+    {
+        let layerClasses = this.GetLayeredComponent(ecsid, componentName);
+
+        let component = new Component();
+
+        for (let [hash, layerClass] of layerClasses.classLayersByHash)
+        {
+            let lastLayer = layerClass[layerClass.length - 1];
+            component.classesByHash.set(hash, lastLayer.classData);
+        }
+
+        return component.ConvertToConcreteComponent(type);
     }
 
     GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): LayerComponent<T>[] | undefined
