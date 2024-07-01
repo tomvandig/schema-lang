@@ -47,11 +47,11 @@ In `hello_wall.ts` we construct a typical wall and instantiate it twice, once ov
 
 ```ts
 // override northwall, left window, frame from green to red
-ecs.AddComponent(["north_wall", "typical_wall", "left_window", "window_frame"], redGeometryComponent);
+ecs.AddComponent(["north_wall", "left_window", "window_frame"], redGeometryComponent);
 
 ```
 
-This operation adds a component to an id prefix `north_wall.typical_wall.left_window.window_frame.geometry` which overrides the existing component present on `window_frame.geometry`.
+This operation adds a component to an id prefix `north_wall.left_window.window_frame.geometry` which overrides the existing component present on `window_frame.geometry`.
 
 The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json` but is quite complex to read as a human. To illustrate the working of the override (and a possible user interface to the ecs data), the file `hello_wall.geometrycolor.ifc5.json` shows a partial view of the ECS applying the ID prefixing and geometry colors and serializing the result to json.
 
@@ -59,36 +59,32 @@ The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json` but is 
 ```json
 {
     "south_wall": { <-- id prefixing hierarchy
-        "typical_wall": { <-- this prefix would be south_wall.typical_wall
-            "color": "green", <-- color info coming from geometry component
-            "left_window": {
-                "color": "red",
-                "window_frame": {
-                    "color": "green"
-                }
-            },
-            "right_window": {
-                "color": "blue",
-                "window_frame": {
-                    "color": "green"
-                }
+        "color": "green", <-- color info coming from geometry component
+        "left_window": { <-- this prefix would be south_wall.left_window
+            "color": "red",
+            "frame": {
+                "color": "green"
+            }
+        },
+        "right_window": {
+            "color": "blue",
+            "frame": {
+                "color": "green"
             }
         }
     },
     "north_wall": {
-        "typical_wall": {
-            "color": "green",
-            "left_window": {
-                "color": "red",
-                "window_frame": {
-                    "color": "red" <-- overridden value
-                }
-            },
-            "right_window": {
-                "color": "blue",
-                "window_frame": {
-                    "color": "green"
-                }
+        "color": "green",
+        "left_window": {
+            "color": "red",
+            "frame": {
+                "color": "red" <-- overridden value
+            }
+        },
+        "right_window": {
+            "color": "blue",
+            "frame": {
+                "color": "green"
             }
         }
     },
