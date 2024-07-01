@@ -217,6 +217,12 @@ export class ECS
         return this.GetAs(rel.type, rel.ecsid);
     }
 
+    ComponentIsOfType<T>(id: ECSID, type: { new(): T ;})
+    {
+        //@ts-ignore
+        return this.components.get(id.ToString())?.ContainsHashGroup(type.hashGroup);
+    }
+
     QueryComponentIdsByType<T>(type: { new(): T ;}): ECSID[]
     {
         let returnValue: ECSID[] = [];

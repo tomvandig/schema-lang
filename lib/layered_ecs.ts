@@ -22,6 +22,7 @@ interface Layer
     name: string;
 }
 
+// TODO: need to take type overrides into account for getting/querying comopnents
 class LayeredECS
 {
     // lower indices have lower priority, e.g layers[1] overrides layers[0]
@@ -172,11 +173,39 @@ class LayeredECS
 
     QueryComponentIdsByType<T>(type: { new(): T ;}): ECSID[]
     {
-        return [];
-    }
+        // TODO: this is terrible
+        let ids: any = {};
 
-    QueryComponentsByType<T>(type: { new(): T ;}): T[]
-    {
-        return [] as T[];
+        for (let i = this.layers.length - 1; i >= 0; i--)
+        {
+            let components = this.layers[i].ecs.QueryComponentIdsByType(type);
+
+            components.forEach((id) => {
+
+                // this ID is of the type, if higher layers did not override
+                if (!ids[id.ToString()])
+                {
+                    let upperOverride = false;
+                    for (let j = i + 1; j < this.layers.length; j++)
+                    {
+                        let componentOfUpperLayer = this.layers[j].ecs.ComponentIsOfType(id, type);
+                        if (componentOfUpperLayer === false)
+                        {
+                            upperOverride = true;
+                            break;
+                        }   
+                    }
+
+                    if (!upperOverride)
+                    {
+                        ids[id.ToString()] = {
+                            topEncounteredLayer: i
+                        };
+                    }
+                }
+            })
+        }
+
+        return Object.keys(ids).map((s) => ECSID.FromString(s));
     }
 }
