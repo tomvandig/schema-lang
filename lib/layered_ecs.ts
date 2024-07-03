@@ -23,7 +23,7 @@ interface Layer
 }
 
 // TODO: need to take type overrides into account for getting/querying comopnents
-class LayeredECS
+export class LayeredECS
 {
     // lower indices have lower priority, e.g layers[1] overrides layers[0]
     layers: Layer[];
@@ -77,7 +77,7 @@ class LayeredECS
             }
         });
 
-        return composedChildren.values();
+        return [...composedChildren.values()];
     }
 
     GetChildren(id: string)

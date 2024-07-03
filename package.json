@@ -11,7 +11,8 @@
     "start": "esbuild lib/define.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
     "gen": "esbuild lib/gen-code.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
     "hellowall": "esbuild hello_wall.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
-    "validate": "esbuild test_validate.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js"
+    "validate": "esbuild test_validate.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js",
+    "layers": "esbuild test_layers.ts --bundle --platform=node --outfile=out.js --external:esbuild && node out.js"
   },
   "author": "",
   "license": "ISC",
