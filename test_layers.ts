@@ -30,6 +30,5 @@ console.log(JSON.stringify(layered.GetChildren(""), null, 4));
 lower.AddComponent(ECSID.FromString("conflict"), "cf", new ifc_window());
 upper.AddComponent(ECSID.FromString("conflict"), "cf", new ifc_wall());
 
-// TODO: this object is both a wall and a window
 console.log(JSON.stringify(layered.ComponentIsOfType(ECSID.FromString("conflict.cf"), ifc_wall), null, 4));
 console.log(JSON.stringify(layered.ComponentIsOfType(ECSID.FromString("conflict.cf"), ifc_window), null, 4));
