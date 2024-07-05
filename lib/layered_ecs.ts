@@ -98,6 +98,12 @@ export class LayeredECS
 
     GetLayeredComponent(ecsid: ECSID, componentName: string)
     {
+        // if set to true, a layered component is the union of all component classes registered to the component name, subject to layer priority
+        // this is nice in terms of data preservation, but also causes confusion as the idea of "component type" dilutes
+        // a single component name can contain multiple component types in this way, from different layers
+        // a merging like this has possible benefits but should be approached in a different way
+        const MERGE_CLASSES_ACROSS_LAYERS = false;
+
         let layerClasses: LayerClasses = {
             classLayersByHash: new Map()
         };
@@ -107,6 +113,10 @@ export class LayeredECS
 
             if (component)
             {
+                if (!MERGE_CLASSES_ACROSS_LAYERS)
+                {
+                    layerClasses.classLayersByHash.clear();
+                }
                 // this layer has a component for this ID/name
                 // check if we already have a match
                 for (let [hash, classObj] of component.classesByHash)
@@ -143,7 +153,7 @@ export class LayeredECS
         return layerClasses;
     }
 
-    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): LayerComponent<T>[] | undefined
+    GetComponent(ecsid: ECSID, componentName: string): Component | undefined
     {
         let layerClasses = this.GetLayeredComponent(ecsid, componentName);
 
@@ -155,10 +165,21 @@ export class LayeredECS
             component.classesByHash.set(hash, lastLayer.classData);
         }
 
-        return component.ConvertToConcreteComponent(type);
+        return component;
     }
 
-    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): LayerComponent<T>[] | undefined
+    GetComponentAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID, componentName: string): T | undefined
+    {
+        return this.GetComponent(ecsid, componentName)?.ConvertToConcreteComponent(type);
+    }
+    
+    ComponentIsOfType<T>(id: ECSID, type: { new(): T ;})
+    {
+        //@ts-ignore
+        return this.GetComponent(id.Pop(), id.GetLast())?.ContainsHashGroup(type.hashGroup);
+    }
+
+    GetAs<T extends ComponentInstance>(type: { new(): T ;}, ecsid: ECSID): T | undefined
     {
         let id = ecsid.Pop();
         let componentName = ecsid.GetLast();

@@ -60,7 +60,7 @@ export class Component
             return undefined;
         }
 
-        return new type().FromJSON(this.AsJSON());
+        return new type().FromJSON(this.AsJSON()) as T;
     }
 }
 
