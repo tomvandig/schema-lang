@@ -9,7 +9,7 @@ let upper = new ECS();
 lower.Link(ECSID.FromString(""), "object1", ECSID.FromString("ref1"))
 lower.Link(ECSID.FromString(""), "shared", ECSID.FromString("ref1"))
 lower.Link(ECSID.FromString(""), "conflict", ECSID.FromString("ref1"))
-upper.Link(ECSID.FromString(""), "object3", ECSID.FromString("ref2"))
+upper.Link(ECSID.FromString(""), "object4", ECSID.FromString("ref2"))
 upper.Link(ECSID.FromString(""), "shared", ECSID.FromString("ref1"))
 upper.Link(ECSID.FromString(""), "conflict", ECSID.FromString("ref2"))
 

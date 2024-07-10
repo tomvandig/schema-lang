@@ -95,3 +95,137 @@ The ECS built in `hello_wall.ts` is serialized to `hello_wall.ifc5.json` but is 
 # Validation
 
 A schema is transformed from `typescript` into JSON, the json representation is included in the generated code as `static schemaJSON` and registered with the ECS upon loading. The ECS can use the schema to validate any incoming components. The file `test_validate.ts` shows an example where all components inside `hello_wall.ifc5.json` are validated using the schemas defined in the file itself, this can be tested by running the script after tampering with the file.
+
+# Layers
+
+The concept of "layers" is borrowed from USD, and provides a form of conflict-free multi-author data composition. Layers work by combining multiple ECS objects into a single layered ECS, which can be queried much like a normal ECS.
+
+In terms of code, this is how a layered ECS is built:
+
+```ts
+let lower = new ECS();
+let upper = new ECS();
+
+let layered = new LayeredECS([
+    {
+        ecs: lower,
+        name: "lower_layer"
+    },
+    {
+        ecs: upper,
+        name: "upper_layer"
+    }
+]);
+```
+
+The resulting `LayeredEcs` has two layers, with `upper` taking precedence in the composition over all data present in `lower`. By flipping the order of the layers in the constructor of `LayeredECS`, the reverse can be achieved. In general, layers with higher priority, or precedence, should have a higher index in the provided array.
+
+As an example for how the composition works we can create four entities spread over the upper and lower layer, and see what the composition returns. The entities are:
+
+* `object1` only in the `lower` layer
+* `shared` in both the `lower` and `upper` layer
+* `conflict` in both the `lower` and `upper` layer
+* `object4` only in the `upper` layer
+
+We can then ask the layered ECS for the composition tree using `layered.GetLayeredChildren("")` which will return:
+
+```json
+[
+    [ <-- object1 only in the lower layer
+        {
+            "layers": [
+                "lower_layer"
+            ],
+            "link": {
+                "name": "object1",
+                "reference": "ref1"
+            }
+        }
+    ],
+    [ <-- object shared is equal in both layers
+        {
+            "layers": [
+                "lower_layer",
+                "upper_layer"
+            ],
+            "link": {
+                "name": "shared",
+                "reference": "ref1"
+            }
+        }
+    ],
+    [ <-- conflicting object is different in the layers
+        { <-- this is the version for the lower layer
+            "layers": [
+                "lower_layer"
+            ],
+            "link": {
+                "name": "conflict",
+                "reference": "ref1" <-- this is ref1
+            }
+        },
+        { <-- this is the version for the upper layer
+            "layers": [
+                "upper_layer"
+            ],
+            "link": {
+                "name": "conflict",
+                "reference": "ref2" <-- this is ref2
+            }
+        }
+    ],
+    [ <-- object4 only in the lower layer
+        {
+            "layers": [
+                "upper_layer"
+            ],
+            "link": {
+                "name": "object4",
+                "reference": "ref2"
+            }
+        }
+    ]
+]
+```
+
+This response shows the intermediate result of the composition with the given layers in the layeredECS. Note that the conflicting object describes the layers that conflict, even the layers that are overridden in the end.
+
+A simplified view of the hierarchy can be requested with `layered.GetChildren("")` which will show the end result of the composition:
+
+```json
+[
+    {
+        "name": "object1",
+        "reference": "ref1"
+    },
+    {
+        "name": "shared",
+        "reference": "ref1"
+    },
+    {
+        "name": "conflict",
+        "reference": "ref2"
+    },
+    {
+        "name": "object4",
+        "reference": "ref2"
+    }
+]
+```
+
+In the above snippet, the `conflict` object has been resolved to `ref2` as present in layer `upper`, and the data of layer `lower` is overridden and unavailable.
+
+For individual components, similar function calls exist. For instance, to check the type of an object:
+
+```ts
+// lower layer classifies the object as window
+lower.AddComponent(ECSID.FromString("conflict"), "cf", new ifc_window());
+// upper layer classifies the object as wall
+upper.AddComponent(ECSID.FromString("conflict"), "cf", new ifc_wall());
+
+layered.ComponentIsOfType(ECSID.FromString("conflict.cf"), ifc_wall) // returns true
+layered.ComponentIsOfType(ECSID.FromString("conflict.cf"), ifc_window) // returns false
+
+// these return values would be opposite if the layers are reversed
+```
+
