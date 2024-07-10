@@ -118,7 +118,7 @@ let layered = new LayeredECS([
 ]);
 ```
 
-The resulting `LayeredEcs` has two layers, with `upper` taking precedence in the composition over all data present in `lower`. By flipping the order of the layers in the constructor of `LayeredECS`, the reverse can be achieved. In general, layers with higher priority, or precedence, should have a higher index in the provided array.
+The resulting `LayeredECS` has two layers, with `upper` taking precedence in the composition over all data present in `lower`. By flipping the order of the layers in the constructor of `LayeredECS`, the reverse can be achieved. In general, layers with higher priority, or precedence, should have a higher index in the provided array.
 
 As an example for how the composition works we can create four entities spread over the upper and lower layer, and see what the composition returns. The entities are:
 
@@ -174,7 +174,7 @@ We can then ask the layered ECS for the composition tree using `layered.GetLayer
             }
         }
     ],
-    [ <-- object4 only in the lower layer
+    [ <-- object4 only in the upper layer
         {
             "layers": [
                 "upper_layer"
@@ -229,3 +229,4 @@ layered.ComponentIsOfType(ECSID.FromString("conflict.cf"), ifc_window) // return
 // these return values would be opposite if the layers are reversed
 ```
 
+In the above snippet, the layered ECS resolves the conflict between the components and can answer queries in a way that is consistent with the precedence of the contributing layers.
