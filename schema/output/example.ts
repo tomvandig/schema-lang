@@ -11,6 +11,8 @@ import { ifc_windowframe } from "./classifications.ts"
 import { ifc_geometry } from "./geometry.ts"
 import { ifc_spaceboundary } from "./spaceboundary.ts"
 import { ifc_transform } from "./transform.ts"
+import { ifc_versionedobject } from "./versioning.ts"
+import { ifc_versionedobject_2 } from "./versioning.ts"
 
 // generated code for example::childobject
 export class example_childobject  implements ComponentInstance

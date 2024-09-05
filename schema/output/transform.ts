@@ -13,6 +13,8 @@ import { example_otherobject } from "./example.ts"
 import { example_parentobject } from "./example.ts"
 import { ifc_geometry } from "./geometry.ts"
 import { ifc_spaceboundary } from "./spaceboundary.ts"
+import { ifc_versionedobject } from "./versioning.ts"
+import { ifc_versionedobject_2 } from "./versioning.ts"
 
 // generated code for ifc::transform
 export class ifc_transform  implements ComponentInstance

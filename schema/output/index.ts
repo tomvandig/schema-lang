@@ -12,6 +12,8 @@ import { example_parentobject } from "./example.ts"
 import { ifc_geometry } from "./geometry.ts"
 import { ifc_spaceboundary } from "./spaceboundary.ts"
 import { ifc_transform } from "./transform.ts"
+import { ifc_versionedobject } from "./versioning.ts"
+import { ifc_versionedobject_2 } from "./versioning.ts"
 export function Register(cb: (obj: any)=>void) {
 	cb(ifc_buildingelement);
 	cb(ifc_classification);
@@ -26,6 +28,8 @@ export function Register(cb: (obj: any)=>void) {
 	cb(ifc_geometry);
 	cb(ifc_spaceboundary);
 	cb(ifc_transform);
+	cb(ifc_versionedobject);
+	cb(ifc_versionedobject_2);
 }
 export { ifc_buildingelement };
 export { ifc_classification };
@@ -40,3 +44,5 @@ export { example_parentobject };
 export { ifc_geometry };
 export { ifc_spaceboundary };
 export { ifc_transform };
+export { ifc_versionedobject };
+export { ifc_versionedobject_2 };
