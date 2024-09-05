@@ -114,16 +114,15 @@ export class ECS
 
     AddClasses(ecsid: ECSID, componentName: string, componentClassesByHash: any)
     {
-        if (this.components.get(ecsid.ToString()))
-        {
-            throw new Error(`Setting duplicate component on name ${ECSID.toString()}`);   
-        }
+        // TODO: might want to have some protection against unintended component overrides
+        let compId = ecsid.Push(componentName).ToString();
+        let existing = this.components.get(compId);
 
-        let comp = new Component();
+        if (!existing) existing = new Component();
         Object.keys(componentClassesByHash).forEach((hash) => {
-            comp.classesByHash.set(hash, componentClassesByHash[hash]);
+            existing.classesByHash.set(hash, componentClassesByHash[hash]);
         })
-        this.components.set(ecsid.Push(componentName).ToString(), comp);
+        this.components.set(compId, existing);
     }
 
     Link(parentECSID: ECSID, name: string, ecsid: ECSID, )

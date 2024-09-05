@@ -820,6 +820,46 @@
                     ]
                 }
             ]
+        },
+        {
+            "name": "ifc::versionedobject",
+            "classes": [
+                {
+                    "name": "ifc::versionedobject",
+                    "hash": "6be3ac2278e714144157872d57d967a8a69abf0606d095725eafac506d585c6a",
+                    "values": [
+                        {
+                            "name": "original_property",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "ifc::versionedobject::2",
+            "classes": [
+                {
+                    "name": "ifc::versionedobject",
+                    "hash": "6be3ac2278e714144157872d57d967a8a69abf0606d095725eafac506d585c6a",
+                    "values": [
+                        {
+                            "name": "original_property",
+                            "type": "string"
+                        }
+                    ]
+                },
+                {
+                    "name": "ifc::versionedobject::2",
+                    "hash": "30bcad138e512a08dcface361fe53e474a19f4af6ca46306d3da97be3c05f0f1",
+                    "values": [
+                        {
+                            "name": "added_property",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }
